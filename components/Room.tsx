@@ -10,7 +10,7 @@ type Props = {
 
 export default function Room(props: Props) {
     return (
-        <div className="relative">
+        <div className="relative w-fit">
             <Image
                 src={`${props.image}`}
                 alt="Room background image"

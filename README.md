@@ -4,15 +4,18 @@ Version 1.0.0
 # To Add:
 
 ## Features
-- Header and footer
-- Home page visual
 - Add loading indication
+- Home page visual
+- Header and footer
+- Visual theme - grid planning paper
 - Background adding
 - Photo sphere adding
-- Visual theme - grid planning paper
 - Modifiable by non-programmers
 - Actual google maps implementation
 - Add date/time to photospheres
+- Add background layering
+- Add photosphere colour coding
+- Add ping animation
 
 ## Fix
 
