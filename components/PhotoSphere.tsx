@@ -9,8 +9,8 @@ type Props = {
 
 export default function PhotoSphere(props: Props) {
     return (
-        <div className={`absolute group rounded-full h-4 w-4 bg-blue-200`} style={{top: `${props.topPos}`, left: `${props.leftPos}`}}>
-            <div className="relative hidden group-hover:block -top-[148px] -left-[148px] z-10">
+        <div className={`absolute group rounded-full h-2 w-2 bg-gray-400`} style={{top: `${props.topPos}`, left: `${props.leftPos}`}}>
+            <div className="relative hidden group-hover:block -top-[149px] -left-[149px] z-10">
                 <ReactPhotoSphereViewer
                     src={props.image}
                     width="300"
