@@ -3,14 +3,14 @@ import { ReactPhotoSphereViewer } from 'react-photo-sphere-viewer';
 
 type Props = {
     image: string;
-    topPos: number;
-    leftPos: number;
+    topPos: string;
+    leftPos: string;
 };
 
 export default function PhotoSphere(props: Props) {
     return (
-        <div className={`absolute group h-4 w-4 top-[${props.topPos}%] left-[${props.leftPos}%] bg-white`}>
-            <div className="relative hidden group-hover:block -top-1/2 -left-1/2">
+        <div className={`absolute group h-4 w-4 bg-white`} style={{top: `${props.topPos}`, left: `${props.leftPos}`}}>
+            <div className="relative hidden group-hover:block -top-[148px] -left-[148px]">
                 <ReactPhotoSphereViewer
                     src={props.image}
                     width="300"

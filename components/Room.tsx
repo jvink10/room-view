@@ -19,7 +19,7 @@ export default function Room(props: Props) {
                 className="object-contain"
             />
             <div className="absolute inset-0">
-				<PhotoSphere image="/bardon-esplanade-park.jpg" topPos={10} leftPos={10} />
+				<PhotoSphere image="/bardon-esplanade-park.jpg" topPos="75%" leftPos="20%" />
             </div>
         </div>
     );
