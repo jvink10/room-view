@@ -6,6 +6,7 @@ Version 1.0.0
 ## Features
 - Header and footer
 - Home page visual
+- Add loading indication
 - Background adding
 - Photo sphere adding
 - Visual theme - grid planning paper
