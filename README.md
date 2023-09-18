@@ -15,6 +15,8 @@ Version 1.0.0
 - Modifiable by non-programmers
 - Add accounts and storage
 - Actual google maps implementation
+- Add settings (for ping)
+- Add favicon
 
 ## Fix
 
