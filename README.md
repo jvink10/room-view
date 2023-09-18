@@ -19,6 +19,7 @@ Version 1.0.0
 - Add favicon
 
 ## Fix
+- Photospheres leaving screen boundaries
 
 ## Task
 
