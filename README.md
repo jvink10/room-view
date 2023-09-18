@@ -10,6 +10,8 @@ Version 1.0.0
 - Photo sphere adding
 - Visual theme - grid planning paper
 - Modifiable by non-programmers
+- Actual google maps implementation
+- Add date/time to photospheres
 
 ## Fix
 
