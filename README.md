@@ -9,8 +9,6 @@ Version 1.0.0
 - Add loading indication
 - Visual theme - grid planning paper
 - Add date/time to photospheres
-- Add photosphere colour coding
-- Add ping animation
 - Background adding
 - Photo sphere adding
 - Add background layering
