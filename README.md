@@ -18,6 +18,7 @@ Version 1.0.0
 - Actual google maps implementation
 - Add settings (for ping)
 - Add favicon
+- Dynamically change title
 
 ## Fix
 - Photospheres leaving screen boundaries

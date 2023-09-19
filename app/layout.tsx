@@ -24,6 +24,8 @@ export default function RootLayout({
 					<div className="my-auto space-x-8">
 						<Link href="/">Home</Link>
 						<Link href="/create">Create</Link>
+						<Link href="/room">Room</Link>
+						<Link href="/photosphere">Photosphere</Link>
 					</div>
 				</header>
 				<div className="flex-grow">
