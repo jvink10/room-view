@@ -5,16 +5,14 @@ Version 1.0.0
 
 ## Features
 - Add Room page content
-  - Main room section in the middle of page
-  - List of photospheres to right
+  - Add ability to add a background
+  - Add ability to add, remove, and modify photospheres
+  - Add date/time to photospheres or other criteria such as weather
   - Room settings to left (ping, layers)
-  - Add background on top left
-  - Add back to create page button in top left
   - Give indication of which list item refers to which photosphere
 
 - Convert navbar into a component
 - Add loading indication
-- Add date/time to photospheres or other criteria such as weather
 - Modifiable by non-programmers
 - Add accounts and storage
 - Actual google maps implementation
@@ -29,3 +27,4 @@ Version 1.0.0
 ## Task
 
 ## Experiment
+- Remove map and photospheres from home page for faster load
