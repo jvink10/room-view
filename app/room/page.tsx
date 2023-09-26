@@ -4,6 +4,7 @@ import Room from '../../components/Room';
 import { useState } from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { AiOutlineArrowRight } from 'react-icons/ai';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 export default function RoomPage() {
     const [photospheres, setPhotospheres] = useState<Array<{ image: string; topPos: string; leftPos: string; color?: string; name?: string }>>([
@@ -23,7 +24,11 @@ export default function RoomPage() {
                 <Link href="/create" className="block m-2 border-2 rounded-full border-black py-1 px-2 w-fit">
                     <span><AiOutlineArrowLeft className="inline" /> Back To Create</span>
                 </Link>
-                <h2 className="px-4 text-xl">Background</h2>
+                <h2 className="pb-2 px-4 text-xl">Background</h2>
+                <div className="border-t border-gray-100 py-4">
+                    <p className="inline">Add A Background</p>
+                    <AiOutlinePlus className="inline" />
+                </div>
             </section>
             <section className="m-8">
                 <Room
@@ -34,13 +39,17 @@ export default function RoomPage() {
 				/>
             </section>
             <section className="border-l border-gray-100 w-96 max-w-1/3 text-center">
-                <Link href="/create" className="block m-2 ml-auto border-2 rounded-full border-black py-1 px-2 w-fit">
+                <Link href="/photosphere" className="block m-2 ml-auto border-2 rounded-full border-black py-1 px-2 w-fit">
                     <span>Go To Photospheres <AiOutlineArrowRight className="inline" /></span>
                 </Link>
                 <h2 className="pb-2 px-4 text-xl text-right">Photospheres</h2>
+                <div className="border-t border-gray-100 py-4">
+                    <p className="inline">Add A Photosphere</p>
+                    <AiOutlinePlus className="inline" />
+                </div>
                 <ul>
                     {photospheres.map((photosphere, index: number) => (
-                        <li key={index} className="border-y border-gray-100 py-2">
+                        <li key={index} className="border-t border-gray-100 py-2">
                             <div className="space-y-1">
                                 <h3>{photosphere.name}</h3>
                                 <div className="flex flex-col lg:flex-row justify-evenly text-center">

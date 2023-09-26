@@ -10,6 +10,7 @@ Version 1.0.0
   - Room settings to left (ping, layers)
   - Add background on top left
   - Add back to create page button in top left
+  - Give indication of which list item refers to which photosphere
 
 - Convert navbar into a component
 - Add loading indication
@@ -23,6 +24,7 @@ Version 1.0.0
 
 ## Fix
 - Photospheres leaving screen boundaries
+- Make photosphere list scrollable instead of page
 
 ## Task
 
