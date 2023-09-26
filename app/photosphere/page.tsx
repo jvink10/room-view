@@ -1,4 +1,6 @@
-export default function PhotoSphere() {
+import PhotoSphere from '../../components/PhotoSphere';
+
+export default function PhotoSpherePage() {
     return (
         <main>
             

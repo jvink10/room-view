@@ -6,7 +6,7 @@ type Props = {
     image: string;
     height: number;
     width: number;
-    photoSphere?: Array<{image: string; topPos: string; leftPos: string; bgColor?: string}>;
+    photoSphere?: Array<{image: string; topPos: string; leftPos: string; color?: string}>;
 };
 
 export default function Room(props: Props) {
@@ -21,7 +21,7 @@ export default function Room(props: Props) {
             />
             <div className="absolute inset-0">
                 {props.photoSphere ? props.photoSphere.map((photoSphere, index) => (
-                    <PhotoSphere key={index} image={photoSphere.image} topPos={photoSphere.topPos} leftPos={photoSphere.leftPos} bgColor={photoSphere.bgColor} />
+                    <PhotoSphere key={index} image={photoSphere.image} topPos={photoSphere.topPos} leftPos={photoSphere.leftPos} color={photoSphere.color} />
                 )) : null}
             </div>
         </div>

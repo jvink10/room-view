@@ -4,21 +4,22 @@ Version 1.0.0
 # To Add:
 
 ## Features
-- Add home page content
-- Add header and footer content
-- Add create page
-- Add room page
-- Add photosphere page
+- Add Room page content
+  - Main room section in the middle of page
+  - List of photospheres to right
+  - Room settings to left (ping, layers)
+  - Add background on top left
+  - Add back to create page button in top left
+
+- Convert navbar into a component
 - Add loading indication
-- Visual theme - grid planning paper
 - Add date/time to photospheres or other criteria such as weather
-- Add background layering
 - Modifiable by non-programmers
 - Add accounts and storage
 - Actual google maps implementation
-- Add settings (for ping)
 - Add favicon
 - Dynamically change title
+- Add map scale
 
 ## Fix
 - Photospheres leaving screen boundaries
