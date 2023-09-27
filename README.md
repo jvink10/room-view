@@ -23,6 +23,7 @@ Version 1.0.0
 ## Fix
 - Photospheres leaving screen boundaries
 - Make photosphere list scrollable instead of page
+- Not require manual height and width entry
 
 ## Task
 

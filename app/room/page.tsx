@@ -7,6 +7,10 @@ import { AiOutlineArrowRight } from 'react-icons/ai';
 import { AiOutlinePlus } from 'react-icons/ai';
 
 export default function RoomPage() {
+    const [background, setBackground] = useState<{ image: string; height: number; width: number }>({
+        image: "/background.png", height: 849, width: 985
+    });
+
     const [photospheres, setPhotospheres] = useState<Array<{ image: string; topPos: string; leftPos: string; color?: string; name?: string }>>([
         {image: "/bardon-esplanade-park.jpg", topPos: "75%", leftPos: "20%", color: "bg-green-500", name: "Bardon Esplanade Park"},
         {image: "/bardon-park-bridge.jpg", topPos: "68%", leftPos: "68%", color: "bg-blue-400", name: "Bardon Park Bridge"},
@@ -23,8 +27,11 @@ export default function RoomPage() {
     const handleBackgroundFileChange = (event: any) => {
         if (event.target.files && event.target.files[0]) {
             const background = event.target.files[0];
-            const body = new FormData();
-            body.append("image", background);
+            const backgroundUrl = URL.createObjectURL(background);
+            setBackground(prevBackground => ({
+                ...prevBackground,
+                image: backgroundUrl
+            }));
         };
     };
 
@@ -49,9 +56,9 @@ export default function RoomPage() {
             </section>
             <section className="m-8">
                 <Room
-					image="/background.png"
-					height={849}
-					width={985}
+					image={background.image}
+					height={background.height}
+					width={background.width}
 					photoSphere={photospheres}
 				/>
             </section>
