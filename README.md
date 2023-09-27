@@ -5,11 +5,11 @@ Version 1.0.0
 
 ## Features
 - Add Room page content
-  - Add ability to add a background
   - Add ability to add, remove, and modify photospheres
   - Add date/time to photospheres or other criteria such as weather
   - Room settings to left (ping, layers)
   - Give indication of which list item refers to which photosphere
+  - Make photosphere list items open with a transition
 
 - Convert navbar into a component
 - Add loading indication
@@ -23,7 +23,7 @@ Version 1.0.0
 ## Fix
 - Photospheres leaving screen boundaries
 - Make photosphere list scrollable instead of page
-- Not require manual height and width entry
+- Room background height and width setting
 
 ## Task
 

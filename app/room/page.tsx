@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link';
 import Room from '../../components/Room';
+import PhotoSphereListItem from '../../components/PhotoSphereListItem';
 import { useState, useRef } from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { AiOutlineArrowRight } from 'react-icons/ai';
@@ -8,7 +9,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 
 export default function RoomPage() {
     const [background, setBackground] = useState<{ image: string; height: number; width: number }>({
-        image: "/background.png", height: 849, width: 985
+        image: "/background.png", height: 1000, width: 1000
     });
 
     const [photospheres, setPhotospheres] = useState<Array<{ image: string; topPos: string; leftPos: string; color?: string; name?: string }>>([
@@ -41,11 +42,11 @@ export default function RoomPage() {
 
     return (
         <main className="flex flex-row">
-            <section className="border-r border-gray-100 w-96 max-w-1/3">
+            <section className="border-r border-gray-100 w-96 max-w-1/3 text-center">
                 <Link href="/create" className="block m-2 border-2 rounded-full border-black py-1 px-2 w-fit">
                     <span><AiOutlineArrowLeft className="inline" /> Back To Create</span>
                 </Link>
-                <h2 className="pb-2 px-4 text-xl">Background</h2>
+                <h2 className="pb-2 px-4 text-xl text-left">Background</h2>
                 <div className="border-t border-gray-100 py-4">
                     <input type="file" accept="image/*" ref={backgroundFileInput} onChange={handleBackgroundFileChange} className="hidden" />
                     <button onClick={handleBackgroundFileClick}>
@@ -73,27 +74,7 @@ export default function RoomPage() {
                 </div>
                 <ul>
                     {photospheres.map((photosphere, index: number) => (
-                        <li key={index} className="border-t border-gray-100 py-2">
-                            <div className="space-y-1">
-                                <h3>{photosphere.name}</h3>
-                                <div className="flex flex-col lg:flex-row justify-evenly text-center">
-                                    <div className="basis-1/2">
-                                        <p>Vertical Position</p>
-                                        <p>{photosphere.topPos}</p>
-                                    </div>
-                                    <div className="basis-1/2">
-                                        <p>Horizontal Position</p>
-                                        <p>{photosphere.leftPos}</p>
-                                    </div>
-                                </div>
-                                {photosphere.color ? 
-                                    <div>
-                                        <p>Color</p>
-                                        <p>{photosphere.color}</p>
-                                    </div>    
-                                : null}
-                            </div>
-                        </li>
+                        <PhotoSphereListItem index={index} photosphere={photosphere} />
                     ))}
                 </ul>
             </section>
