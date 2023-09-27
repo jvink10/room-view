@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link';
 import Room from '../../components/Room';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { AiOutlinePlus } from 'react-icons/ai';
@@ -18,6 +18,20 @@ export default function RoomPage() {
         {image: "/st-josephs-lunch-area.jpg", topPos: "86%", leftPos: "66%", color: "bg-yellow-400", name: "St. Josephs Lunch Area"}
     ]);
 
+    const backgroundFileInput = useRef<HTMLInputElement>(null);
+
+    const handleBackgroundFileChange = (event: any) => {
+        if (event.target.files && event.target.files[0]) {
+            const background = event.target.files[0];
+            const body = new FormData();
+            body.append("image", background);
+        };
+    };
+
+    const handleBackgroundFileClick = (event: any) => {
+        backgroundFileInput.current?.click();
+    };
+
     return (
         <main className="flex flex-row">
             <section className="border-r border-gray-100 w-96 max-w-1/3">
@@ -26,8 +40,11 @@ export default function RoomPage() {
                 </Link>
                 <h2 className="pb-2 px-4 text-xl">Background</h2>
                 <div className="border-t border-gray-100 py-4">
-                    <p className="inline">Add A Background</p>
-                    <AiOutlinePlus className="inline" />
+                    <input type="file" accept="image/*" ref={backgroundFileInput} onChange={handleBackgroundFileChange} className="hidden" />
+                    <button onClick={handleBackgroundFileClick}>
+                        <p className="inline">Add A Background</p>
+                        <AiOutlinePlus className="inline" />
+                    </button>
                 </div>
             </section>
             <section className="m-8">
