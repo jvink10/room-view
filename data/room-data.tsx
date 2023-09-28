@@ -1,5 +1,5 @@
-export const emptyRoom = {
-    background: {id: 1, name: "Empty Room", image: "/white-background.jpg", height: 1000, width: 1000},
+export const newRoom = {
+    background: {id: 1, name: "New Room", image: "/white-background.jpg", height: 1000, width: 1000},
     photospheres: [],
 };
 

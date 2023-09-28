@@ -1,29 +1,34 @@
 'use client'
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import Room from '../../components/Room';
 import PhotoSphereListItem from '../../components/PhotoSphereListItem';
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { AiOutlinePlus } from 'react-icons/ai';
 
-import { emptyRoom, exampleRoom } from '../../data/room-data';
+import { newRoom, exampleRoom } from '../../data/room-data';
 
 export default function RoomPage() {
     const [background, setBackground] = useState<{ id: number; name: string; image: string; height: number; width: number }>({
-        id: 2, name: "Example Room", image: "/background.png", height: 1000, width: 1000,
+        id: 1, name: "New Room", image: "/white-background.png", height: 1000, width: 1000,
     });
 
-    const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: string; leftPos: string; color?: string; }>>([
-        {id: 1, name: "Bardon Esplanade Park", image: "/bardon-esplanade-park.jpg", topPos: "75%", leftPos: "20%", color: "bg-green-500"},
-        {id: 2, name: "Bardon Park Bridge", image: "/bardon-park-bridge.jpg", topPos: "68%", leftPos: "68%", color: "bg-blue-400"},
-        {id: 3, name: "Bowman Park", image: "/bowman-park.jpg", topPos: "93%", leftPos: "53%", color: "bg-green-500"},
-        {id: 4, name: "Dawn Street Park", image: "/dawn-street-park.jpg", topPos: "30%", leftPos: "58%"},
-        {id: 5, name: "Glen Harding Park", image: "/glen-harding-park.jpg", topPos: "20%", leftPos: "58%"},
-        {id: 6, name: "Lions Park", image: "/lions-park.jpg", topPos: "10%", leftPos: "80%"},
-        {id: 7, name: "Lions Park Parking", image: "/lions-park-parking.jpg", topPos: "22%", leftPos: "67%"},
-        {id: 8, name: "St. Josephs Lunch Area", image: "/st-josephs-lunch-area.jpg", topPos: "86%", leftPos: "66%", color: "bg-yellow-400"},
-    ]);
+    const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: string; leftPos: string; color?: string; }>>([]);
+
+    const searchParams = useSearchParams();
+
+    useEffect(() => {
+        const searchParamsName = searchParams.get('name');
+        if (searchParamsName === "New Room") {
+            setBackground(newRoom.background);
+            setPhotospheres(newRoom.photospheres);
+        } else if (searchParamsName === "Example Room") {
+            setBackground(exampleRoom.background);
+            setPhotospheres(exampleRoom.photospheres);
+        };
+    }, []);
 
     const backgroundFileInput = useRef<HTMLInputElement>(null);
 
