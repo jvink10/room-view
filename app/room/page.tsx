@@ -47,6 +47,21 @@ export default function RoomPage() {
         backgroundFileInput.current?.click();
     };
 
+    const updatePhotosphere = (newPhotosphere: { id: number; name: string; image: string; topPos: string; leftPos: string; color?: string; }) => {
+        const id = newPhotosphere.id;
+        setPhotospheres(prevPhotospheres => {
+            const index = prevPhotospheres.findIndex(photosphere => photosphere.id === id);
+            
+            if (index === -1) {
+                return prevPhotospheres;
+            };
+            
+            const updatedPhotospheres = [...prevPhotospheres];
+            updatedPhotospheres[index] = newPhotosphere;
+            return updatedPhotospheres;
+        });
+    };
+
     return (
         <main className="flex flex-row">
             <section className="border-r border-gray-100 w-96 max-w-1/3 text-center">
@@ -82,8 +97,8 @@ export default function RoomPage() {
                     <AiOutlinePlus className="inline" />
                 </div>
                 <ul>
-                    {photospheres.map((photosphere, index: number) => (
-                        <PhotoSphereListItem key={index} photosphere={photosphere} />
+                    {photospheres.map((photosphere, index) => (
+                        <PhotoSphereListItem key={index} photosphere={photosphere} updatePhotosphere={updatePhotosphere} />
                     ))}
                 </ul>
             </section>

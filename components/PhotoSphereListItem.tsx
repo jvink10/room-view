@@ -1,8 +1,15 @@
 type Props = {
-    photosphere: { image: string; topPos: string; leftPos: string; color?: string; name?: string }
+    photosphere: { id: number; name: string; image: string; topPos: string; leftPos: string; color?: string };
+    updatePhotosphere: Function;
 };
 
 export default function PhotoSphereListItem(props: Props) {
+    const handleChange = (event: { target: { name: string; value: string } } ) => {
+        const { name, value } = event.target;
+        const newPhotosphere = {...props.photosphere, [name]: value};
+        props.updatePhotosphere(newPhotosphere);
+    };
+
     return (
         <li className="group border-t border-gray-100 py-2">
             <div className="space-y-1">
@@ -13,11 +20,11 @@ export default function PhotoSphereListItem(props: Props) {
                 <div className="hidden group-hover:flex flex-col lg:flex-row justify-evenly text-center">
                     <div className="basis-1/2">
                         <p>Vertical Position</p>
-                        <input type="text" value={props.photosphere.topPos} max={100} min={0} className="w-16 text-center" />
+                        <input type="text" name="topPos" value={props.photosphere.topPos} onChange={handleChange} max={100} min={0} className="w-16 text-center" />
                     </div>
                     <div className="basis-1/2">
                         <p>Horizontal Position</p>
-                        <input type="text" value={props.photosphere.leftPos} max={100} min={0} className="w-16 text-center" />
+                        <input type="text" name="leftPos" value={props.photosphere.leftPos} onChange={handleChange} max={100} min={0} className="w-16 text-center" />
                     </div>
                 </div>
             </div>
