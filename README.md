@@ -26,6 +26,8 @@ Version 1.0.0
 - Make photosphere hover circle move left and up half its width and height
 
 ## Task
+- Clean code
+- Put things into components or custom hooks and such
 
 ## Experiment
 - Remove map and photospheres from home page for faster load
