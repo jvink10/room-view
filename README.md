@@ -10,6 +10,7 @@ Version 1.0.0
   - Room settings to left (ping, layers)
   - Give indication of which list item refers to which photosphere
   - Make photosphere list items open with a transition
+  - Add ability to change photosphere list order
 
 - Convert navbar into a component
 - Add loading indication

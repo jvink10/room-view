@@ -74,7 +74,7 @@ export default function RoomPage() {
                 </div>
                 <ul>
                     {photospheres.map((photosphere, index: number) => (
-                        <PhotoSphereListItem index={index} photosphere={photosphere} />
+                        <PhotoSphereListItem key={index} photosphere={photosphere} />
                     ))}
                 </ul>
             </section>
