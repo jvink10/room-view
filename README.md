@@ -20,6 +20,7 @@ Version 1.0.0
 - Dynamically change title
 
 ## Fix
+- Fix fullscreen mode for mobile
 - Photospheres leaving screen boundaries
 - Make photosphere list scrollable instead of page scrolling
 - Room background height and width setting

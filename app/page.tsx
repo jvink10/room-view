@@ -10,6 +10,7 @@ export default function Home() {
 					image="/background.png"
 					height={849}
 					width={985}
+					ping={true}
 					photospheres={[
 						{id: 1, name: "Bardon Esplanade Park", image: "/bardon-esplanade-park.jpg", topPos: "75%", leftPos: "20%", color: "bg-green-500"},
         				{id: 2, name: "Bardon Park Bridge", image: "/bardon-park-bridge.jpg", topPos: "68%", leftPos: "68%", color: "bg-blue-400"},
