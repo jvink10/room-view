@@ -91,22 +91,22 @@ export default function RoomPage() {
 
     return (
         <main className="flex flex-row">
-            <section className="border-r border-gray-100 w-96 max-w-1/3 text-center">
-                <Link href="/create" className="block m-2 border-2 rounded-full border-black py-1 px-2 w-fit">
+            <section className="hidden lg:block border-r border-gray-100 w-96 max-w-1/3 text-center bg-white">
+                <Link href="/create" className="block m-2 border-2 rounded-full border-black py-1 px-4 w-fit">
                     <span><AiOutlineArrowLeft className="inline" /> Back To Create</span>
                 </Link>
                 <h2 className="pb-2 px-4 text-xl text-left">Background</h2>
-                <div className="border-t border-gray-100 py-4">
+                <div className="border-t border-gray-100 p-4">
                     <input type="file" accept="image/*" ref={backgroundFileInput} onChange={handleBackgroundFileChange} className="hidden" />
                     <button onClick={handleBackgroundFileClick}>
                         <p className="inline">Add A Background</p>
                         <AiOutlinePlus className="inline" />
                     </button>
                 </div>
-                <div className="border-t border-gray-100 py-8">
+                <div className="border-t border-gray-100 py-8 px-4">
                     <label className="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" checked={isPinging} onChange={(event) => setIsPinging(event.target.checked)} className="sr-only peer" />
-                        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                        <div className={`relative rounded-full h-4 w-4 -top-0.5 -left-0.5 bg-gray-400 ${isPinging ? "animate-ping" : ""}`}></div>
                         <span className="ml-3 text-sm font-medium">Photosphere Pinging</span>
                     </label>
                 </div>
@@ -122,12 +122,12 @@ export default function RoomPage() {
 					photospheres={photospheres}
 				/>
             </section>
-            <section className="border-l border-gray-100 w-96 max-w-1/3 text-center">
-                <Link href="/photosphere" className="block m-2 ml-auto border-2 rounded-full border-black py-1 px-2 w-fit">
+            <section className="hidden lg:block border-l border-gray-100 w-96 max-w-1/3 text-center bg-white">
+                <Link href="/photosphere" className="block m-2 ml-auto border-2 rounded-full border-black py-1 px-4 w-fit">
                     <span>Go To Photospheres <AiOutlineArrowRight className="inline" /></span>
                 </Link>
                 <h2 className="pb-2 px-4 text-xl text-right">Photospheres</h2>
-                <div className="border-t border-gray-100 py-4">
+                <div className="border-t border-gray-100 py-4 px-4">
                     <input type="file" accept="image/*" ref={photosphereFileInput} onChange={handlePhotosphereFileChange} className="hidden" />
                     <button onClick={handlePhotosphereFileClick}>
                         <p className="inline">Add A Photosphere</p>

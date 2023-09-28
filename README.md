@@ -6,10 +6,11 @@ Version 1.0.0
 # To Add:
 
 ## Features
+- Add photosphere page
 - Add photosphere removal warning
 - Make photosphere colour changeable
-- Add date/timer/weather to photospheres
-- Room settings (ping, layers, map scale)
+- Add date/time/weather (custom groups) to photospheres (advanced settings)
+- Room settings (layers, map scale)
 - Give indication of which list item refers to which photosphere
 - Make photosphere list items open with a transition
 - Add ability to change photosphere list order
@@ -29,3 +30,4 @@ Version 1.0.0
 ## Experiment
 - Remove map and photospheres from home page for faster load
 - Actual google maps implementation
+- Customise setting toggle for website

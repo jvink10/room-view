@@ -38,7 +38,7 @@ export default function PhotoSphereListItem(props: Props) {
     };
 
     return (
-        <li className="group border-t border-gray-100 py-2">
+        <li className="group border-t border-gray-100 py-2 px-4">
             <div className="space-y-1">
                 <div className="flex flex-row justify-center gap-2">
                     <input type="text" name="name" value={props.photosphere.name} onChange={handleUpdate} className="text-center" />
