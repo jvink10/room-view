@@ -2,11 +2,12 @@
 import { ReactPhotoSphereViewer } from 'react-photo-sphere-viewer';
 
 type Props = {
+    id: number;
+    name: string;
     image: string;
     topPos: string;
     leftPos: string;
     color?: string;
-    name?: string;
 };
 
 export default function PhotoSphere(props: Props) {

@@ -4,6 +4,8 @@ Version 1.0.0
 # To Add:
 
 ## Features
+- Add database
+
 - Add Room page content
   - Add ability to add, remove, and modify photospheres
   - Add date/time to photospheres or other criteria such as weather
