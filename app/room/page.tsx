@@ -7,6 +7,8 @@ import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { AiOutlinePlus } from 'react-icons/ai';
 
+import { emptyRoom, exampleRoom } from '../../data/room-data';
+
 export default function RoomPage() {
     const [background, setBackground] = useState<{ id: number; name: string; image: string; height: number; width: number }>({
         id: 2, name: "Example Room", image: "/background.png", height: 1000, width: 1000,
