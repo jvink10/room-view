@@ -13,11 +13,11 @@ export default function PhotoSphereListItem(props: Props) {
                 <div className="hidden group-hover:flex flex-col lg:flex-row justify-evenly text-center">
                     <div className="basis-1/2">
                         <p>Vertical Position</p>
-                        <input type="text" value={props.photosphere.topPos} max={100} min={0} className="text-center" />
+                        <input type="text" value={props.photosphere.topPos} max={100} min={0} className="w-16 text-center" />
                     </div>
                     <div className="basis-1/2">
                         <p>Horizontal Position</p>
-                        <input type="text" value={props.photosphere.leftPos} max={100} min={0} className="text-center" />
+                        <input type="text" value={props.photosphere.leftPos} max={100} min={0} className="w-16 text-center" />
                     </div>
                 </div>
             </div>
