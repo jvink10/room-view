@@ -5,10 +5,31 @@ type Props = {
 };
 
 export default function PhotoSphereListItem(props: Props) {
+    const textVerification = (name: string, value: string) => {
+        if (name == "name") {
+            const nameRegex = /^.{0,20}$/
+            if (nameRegex.test(value)) {
+                return true;
+            };
+        };
+
+        if (name == "topPos" || name == "leftPos") {
+            const posRegex = /^(100|\d{0,2})%$/
+            if (posRegex.test(value)) {
+                return true;
+            };
+        };
+
+        return false;
+    };
+    
     const handleUpdate = (event: { target: { name: string; value: string } } ) => {
         const { name, value } = event.target;
-        const newPhotosphere = {...props.photosphere, [name]: value};
-        props.updatePhotosphere(newPhotosphere);
+
+        if (textVerification(name, value)) {
+            const newPhotosphere = {...props.photosphere, [name]: value};
+            props.updatePhotosphere(newPhotosphere);
+        };
     };
 
     const handleRemove = (event: React.MouseEvent<HTMLButtonElement>) => {

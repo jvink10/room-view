@@ -1,31 +1,23 @@
 # Room View
 Version 1.0.0
 
+- Check out https://react.dev/learn/passing-data-deeply-with-context and https://react.dev/reference/react/useContext
+
 # To Add:
 
 ## Features
-- Add database
-- Check out https://react.dev/learn/passing-data-deeply-with-context and https://react.dev/reference/react/useContext
-
-- Add Room page content
-  - Add ability to add, remove, and modify photospheres
-  - Add date/time to photospheres or other criteria such as weather
-  - Room settings to left (ping, layers)
-  - Give indication of which list item refers to which photosphere
-  - Make photosphere list items open with a transition
-  - Add ability to change photosphere list order
-
-- Make photosphere name changeable
+- Text verification
+- Make photosphere colour changeable
+- Add date/timer/weather to photospheres
+- Room settings (ping, layers, map scale)
+- Give indication of which list item refers to which photosphere
+- Make photosphere list items open with a transition
+- Add ability to change photosphere list order
 - Add photosphere removal warning
-- Remove Room and Photosphere from navbar
-- Convert navbar into a component
 - Add loading indication
-- Modifiable by non-programmers
-- Add accounts and storage
-- Actual google maps implementation
+- Add accounts and database storage
 - Add favicon
 - Dynamically change title
-- Add map scale
 
 ## Fix
 - Photospheres leaving screen boundaries
@@ -37,3 +29,4 @@ Version 1.0.0
 
 ## Experiment
 - Remove map and photospheres from home page for faster load
+- Actual google maps implementation
