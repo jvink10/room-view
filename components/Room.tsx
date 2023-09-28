@@ -8,7 +8,7 @@ type Props = {
     image: string;
     height: number;
     width: number;
-    photosphere?: Array<{id: number; name: string; image: string; topPos: string; leftPos: string; color?: string}>;
+    photospheres?: Array<{id: number; name: string; image: string; topPos: string; leftPos: string; color?: string}>;
 };
 
 export default function Room(props: Props) {
@@ -22,7 +22,7 @@ export default function Room(props: Props) {
                 className="object-contain"
             />
             <div className="absolute inset-0">
-                {props.photosphere ? props.photosphere.map((photosphere, index) => (
+                {props.photospheres ? props.photospheres.map((photosphere, index) => (
                     <PhotoSphere key={index} id={photosphere.id} name={photosphere.name} image={photosphere.image} topPos={photosphere.topPos} leftPos={photosphere.leftPos} color={photosphere.color} />
                 )) : null}
             </div>

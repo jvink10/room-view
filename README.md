@@ -5,6 +5,7 @@ Version 1.0.0
 
 ## Features
 - Add database
+- Check out https://react.dev/learn/passing-data-deeply-with-context and https://react.dev/reference/react/useContext
 
 - Add Room page content
   - Add ability to add, remove, and modify photospheres
@@ -14,6 +15,7 @@ Version 1.0.0
   - Make photosphere list items open with a transition
   - Add ability to change photosphere list order
 
+- Remove Room and Photosphere from navbar
 - Convert navbar into a component
 - Add loading indication
 - Modifiable by non-programmers

@@ -69,7 +69,7 @@ export default function RoomPage() {
 					image={background.image}
 					height={background.height}
 					width={background.width}
-					photosphere={photospheres}
+					photospheres={photospheres}
 				/>
             </section>
             <section className="border-l border-gray-100 w-96 max-w-1/3 text-center">
