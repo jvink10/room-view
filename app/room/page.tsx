@@ -17,6 +17,8 @@ export default function RoomPage() {
 
     const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: string; leftPos: string; color?: string; }>>([]);
 
+    const screenLg = window.innerWidth >= 1024;
+    const [isTabVisible, setIsTabVisible] = useState<{ roomTab: boolean; photosphereTab: boolean }>({roomTab: screenLg, photosphereTab: screenLg});
     const [isPinging, setIsPinging] = useState(true);
 
     const searchParams = useSearchParams();
@@ -31,6 +33,13 @@ export default function RoomPage() {
             setPhotospheres(exampleRoom.photospheres);
         };
     }, []);
+
+    const handleTabVisible = (tab: string, visible: boolean) => {
+        setIsTabVisible(prevTabVisible => ({
+            ...prevTabVisible,
+            [tab]: visible,
+        }));
+    };
 
     const backgroundFileInput = useRef<HTMLInputElement>(null);
 
@@ -90,8 +99,8 @@ export default function RoomPage() {
     };
 
     return (
-        <main className="flex flex-row">
-            <section className="hidden lg:block border-r border-gray-100 w-96 max-w-1/3 text-center bg-white">
+        <main className="flex flex-row justify-center">
+            <section className={`${isTabVisible.roomTab ? "" : "hidden"} border-r border-gray-100 w-96 max-w-1/3 text-center bg-white`}>
                 <Link href="/create" className="block m-2 border-2 rounded-full border-black py-1 px-4 w-fit">
                     <span><AiOutlineArrowLeft className="inline" /> Back To Create</span>
                 </Link>
@@ -111,7 +120,7 @@ export default function RoomPage() {
                     </label>
                 </div>
             </section>
-            <section className="m-8">
+            <section className="relative p-8">
                 <Room
                     id={background.id}
                     name={background.name}
@@ -121,8 +130,10 @@ export default function RoomPage() {
                     ping={isPinging}
 					photospheres={photospheres}
 				/>
+                <div onClick={() => handleTabVisible("roomTab", !isTabVisible.roomTab)} className="absolute border-t-[48px] border-t-gray-400 border-r-[48px] border-r-transparent top-0 left-0"></div>
+                <div onClick={() => handleTabVisible("photosphereTab", !isTabVisible.photosphereTab)} className="absolute border-t-[48px] border-t-gray-400 border-l-[48px] border-l-transparent top-0 right-0"></div>
             </section>
-            <section className="hidden lg:block border-l border-gray-100 w-96 max-w-1/3 text-center bg-white">
+            <section className={`${isTabVisible.photosphereTab ? "" : "hidden"} border-l border-gray-100 w-96 max-w-1/3 text-center bg-white`}>
                 <Link href="/photosphere" className="block m-2 ml-auto border-2 rounded-full border-black py-1 px-4 w-fit">
                     <span>Go To Photospheres <AiOutlineArrowRight className="inline" /></span>
                 </Link>
