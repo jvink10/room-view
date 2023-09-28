@@ -47,6 +47,24 @@ export default function RoomPage() {
         backgroundFileInput.current?.click();
     };
 
+    const photosphereFileInput = useRef<HTMLInputElement>(null);
+
+    const handlePhotosphereFileChange = (event: any) => {
+        if (event.target.files && event.target.files[0]) {
+            const photosphere = event.target.files[0];
+            const photosphereUrl = URL.createObjectURL(photosphere);
+            const id = photospheres.reduce((prev, current) => (prev > current.id) ? prev : current.id, -1) + 1;
+            const newPhotosphere = {id: id, name: "New Photosphere", image: photosphereUrl, topPos: "50%", leftPos: "50%"};
+            const newPhotospheres = [...photospheres];
+            newPhotospheres.push(newPhotosphere);
+            setPhotospheres(newPhotospheres);
+        };
+    };
+
+    const handlePhotosphereFileClick = (event: any) => {
+        photosphereFileInput.current?.click();
+    };
+
     const updatePhotosphere = (newPhotosphere: { id: number; name: string; image: string; topPos: string; leftPos: string; color?: string; }) => {
         const id = newPhotosphere.id;
         setPhotospheres(prevPhotospheres => {
@@ -100,8 +118,11 @@ export default function RoomPage() {
                 </Link>
                 <h2 className="pb-2 px-4 text-xl text-right">Photospheres</h2>
                 <div className="border-t border-gray-100 py-4">
-                    <p className="inline">Add A Photosphere</p>
-                    <AiOutlinePlus className="inline" />
+                    <input type="file" accept="image/*" ref={photosphereFileInput} onChange={handlePhotosphereFileChange} className="hidden" />
+                    <button onClick={handlePhotosphereFileClick}>
+                        <p className="inline">Add A Photosphere</p>
+                        <AiOutlinePlus className="inline" />
+                    </button>
                 </div>
                 <ul>
                     {photospheres.map((photosphere, index) => (

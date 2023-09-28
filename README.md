@@ -15,6 +15,8 @@ Version 1.0.0
   - Make photosphere list items open with a transition
   - Add ability to change photosphere list order
 
+- Make photosphere name changeable
+- Add photosphere removal warning
 - Remove Room and Photosphere from navbar
 - Convert navbar into a component
 - Add loading indication
