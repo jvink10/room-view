@@ -29,8 +29,9 @@ Version 1.0.0
 
 ## Fix
 - Photospheres leaving screen boundaries
-- Make photosphere list scrollable instead of page
+- Make photosphere list scrollable instead of page scrolling
 - Room background height and width setting
+- Ensure only certain values can be added for name and position of photospheres
 
 ## Task
 
