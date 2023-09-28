@@ -55,9 +55,16 @@ export default function RoomPage() {
             if (index === -1) {
                 return prevPhotospheres;
             };
-            
+
             const updatedPhotospheres = [...prevPhotospheres];
             updatedPhotospheres[index] = newPhotosphere;
+            return updatedPhotospheres;
+        });
+    };
+
+    const removePhotosphere = (id: number) => {
+        setPhotospheres(prevPhotospheres => {
+            const updatedPhotospheres = prevPhotospheres.filter(photosphere => photosphere.id !== id);
             return updatedPhotospheres;
         });
     };
@@ -98,7 +105,7 @@ export default function RoomPage() {
                 </div>
                 <ul>
                     {photospheres.map((photosphere, index) => (
-                        <PhotoSphereListItem key={index} photosphere={photosphere} updatePhotosphere={updatePhotosphere} />
+                        <PhotoSphereListItem key={index} photosphere={photosphere} updatePhotosphere={updatePhotosphere} removePhotosphere={removePhotosphere} />
                     ))}
                 </ul>
             </section>

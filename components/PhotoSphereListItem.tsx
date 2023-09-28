@@ -1,13 +1,19 @@
 type Props = {
     photosphere: { id: number; name: string; image: string; topPos: string; leftPos: string; color?: string };
     updatePhotosphere: Function;
+    removePhotosphere: Function;
 };
 
 export default function PhotoSphereListItem(props: Props) {
-    const handleChange = (event: { target: { name: string; value: string } } ) => {
+    const handleUpdate = (event: { target: { name: string; value: string } } ) => {
         const { name, value } = event.target;
         const newPhotosphere = {...props.photosphere, [name]: value};
         props.updatePhotosphere(newPhotosphere);
+    };
+
+    const handleRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
+        const id = props.photosphere.id;
+        props.removePhotosphere(id);
     };
 
     return (
@@ -17,14 +23,19 @@ export default function PhotoSphereListItem(props: Props) {
                     <h3>{props.photosphere.name}</h3>
                     <div className={`my-auto border-2 rounded-full border-white h-4 w-4 ${props.photosphere.color ? props.photosphere.color : "bg-gray-400"}`}></div>
                 </div>
-                <div className="hidden group-hover:flex flex-col lg:flex-row justify-evenly text-center">
-                    <div className="basis-1/2">
-                        <p>Vertical Position</p>
-                        <input type="text" name="topPos" value={props.photosphere.topPos} onChange={handleChange} max={100} min={0} className="w-16 text-center" />
+                <div className="hidden group-hover:block text-center">
+                    <div className="flex flex-col lg:flex-row justify-evenly">
+                        <div className="basis-1/2">
+                            <p>Vertical Position</p>
+                            <input type="text" name="topPos" value={props.photosphere.topPos} onChange={handleUpdate} max={100} min={0} className="w-16 text-center" />
+                        </div>
+                        <div className="basis-1/2">
+                            <p>Horizontal Position</p>
+                            <input type="text" name="leftPos" value={props.photosphere.leftPos} onChange={handleUpdate} max={100} min={0} className="w-16 text-center" />
+                        </div>
                     </div>
-                    <div className="basis-1/2">
-                        <p>Horizontal Position</p>
-                        <input type="text" name="leftPos" value={props.photosphere.leftPos} onChange={handleChange} max={100} min={0} className="w-16 text-center" />
+                    <div>
+                        <button onClick={handleRemove}>Remove</button>
                     </div>
                 </div>
             </div>
