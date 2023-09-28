@@ -8,6 +8,7 @@ type Props = {
     image: string;
     height: number;
     width: number;
+    ping?: boolean;
     photospheres?: Array<{id: number; name: string; image: string; topPos: string; leftPos: string; color?: string}>;
 };
 
@@ -23,7 +24,7 @@ export default function Room(props: Props) {
             />
             <div className="absolute inset-0">
                 {props.photospheres ? props.photospheres.map((photosphere, index) => (
-                    <PhotoSphere key={index} id={photosphere.id} name={photosphere.name} image={photosphere.image} topPos={photosphere.topPos} leftPos={photosphere.leftPos} color={photosphere.color} />
+                    <PhotoSphere key={index} id={photosphere.id} name={photosphere.name} image={photosphere.image} topPos={photosphere.topPos} leftPos={photosphere.leftPos} color={photosphere.color} ping={props.ping} />
                 )) : null}
             </div>
         </div>

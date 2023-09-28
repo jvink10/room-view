@@ -17,6 +17,8 @@ export default function RoomPage() {
 
     const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: string; leftPos: string; color?: string; }>>([]);
 
+    const [isPinging, setIsPinging] = useState(true);
+
     const searchParams = useSearchParams();
 
     useEffect(() => {
@@ -101,6 +103,13 @@ export default function RoomPage() {
                         <AiOutlinePlus className="inline" />
                     </button>
                 </div>
+                <div className="border-t border-gray-100 py-8">
+                    <label className="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked={isPinging} onChange={(event) => setIsPinging(event.target.checked)} className="sr-only peer" />
+                        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                        <span className="ml-3 text-sm font-medium">Photosphere Pinging</span>
+                    </label>
+                </div>
             </section>
             <section className="m-8">
                 <Room
@@ -109,6 +118,7 @@ export default function RoomPage() {
 					image={background.image}
 					height={background.height}
 					width={background.width}
+                    ping={isPinging}
 					photospheres={photospheres}
 				/>
             </section>

@@ -6,14 +6,13 @@ Version 1.0.0
 # To Add:
 
 ## Features
-- Text verification
+- Add photosphere removal warning
 - Make photosphere colour changeable
 - Add date/timer/weather to photospheres
 - Room settings (ping, layers, map scale)
 - Give indication of which list item refers to which photosphere
 - Make photosphere list items open with a transition
 - Add ability to change photosphere list order
-- Add photosphere removal warning
 - Add loading indication
 - Add accounts and database storage
 - Add favicon
@@ -23,7 +22,7 @@ Version 1.0.0
 - Photospheres leaving screen boundaries
 - Make photosphere list scrollable instead of page scrolling
 - Room background height and width setting
-- Ensure only certain values can be added for name and position of photospheres
+- Make photosphere hover circle move left and up half its width and height
 
 ## Task
 
