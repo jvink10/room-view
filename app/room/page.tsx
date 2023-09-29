@@ -150,8 +150,8 @@ export default function RoomPage() {
                     </button>
                 </div>
                 <ul>
-                    {photospheres.map((photosphere, index) => (
-                        <PhotoSphereListItem key={index} photosphere={photosphere} updatePhotosphere={updatePhotosphere} removePhotosphere={removePhotosphere} />
+                    {photospheres.map((photosphere) => (
+                        <PhotoSphereListItem key={photosphere.id} photosphere={photosphere} updatePhotosphere={updatePhotosphere} removePhotosphere={removePhotosphere} />
                     ))}
                 </ul>
             </section>
