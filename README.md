@@ -6,6 +6,7 @@ Version 1.0.0
 # To Add:
 
 ## Features
+- Add a tutorial
 - Add photosphere page
 - Add photosphere removal warning
 - Make photosphere colour changeable
