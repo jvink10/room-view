@@ -23,8 +23,8 @@ export default function Room(props: Props) {
                 className="object-contain"
             />
             <div className="absolute inset-0">
-                {props.photospheres ? props.photospheres.map((photosphere, index) => (
-                    <PhotoSphere key={index} id={photosphere.id} name={photosphere.name} image={photosphere.image} topPos={photosphere.topPos} leftPos={photosphere.leftPos} color={photosphere.color} ping={props.ping} />
+                {props.photospheres ? props.photospheres.map((photosphere) => (
+                    <PhotoSphere key={photosphere.id} id={photosphere.id} name={photosphere.name} image={photosphere.image} topPos={photosphere.topPos} leftPos={photosphere.leftPos} color={photosphere.color} ping={props.ping} />
                 )) : null}
             </div>
         </div>
