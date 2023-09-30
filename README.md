@@ -1,5 +1,5 @@
 # Room View
-Version 1.0.0
+Version 1.0.1
 
 - Check out https://react.dev/learn/passing-data-deeply-with-context and https://react.dev/reference/react/useContext
 
@@ -22,18 +22,13 @@ Version 1.0.0
 
 ## Fix
 - Fix fullscreen mode for mobile
-- Photospheres leaving screen boundaries
 - Make photosphere list scrollable instead of page scrolling
 - Room background height and width setting
-- Make photosphere hover circle move left and up half its width and height
 
 ## Task
-- Clean code
-- Put things into components or custom hooks and such
 
 ## Experiment
 - Swap react-photo-sphere-viewer out with photo-sphere-viewer
 - Add equirectangular tiles adapter to photospheres for faster load https://photo-sphere-viewer.js.org/guide/adapters/equirectangular-tiles.html#example
 - Remove map and photospheres from home page for faster load
 - Actual google maps implementation
-- Customise setting toggle for website
