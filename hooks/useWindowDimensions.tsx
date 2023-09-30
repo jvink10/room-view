@@ -4,12 +4,12 @@ export default function useWindowDimensions() {
     const hasWindow = typeof window !== 'undefined';
 
     function getWindowDimensions() {
-        const height = hasWindow ? window.innerHeight : null;
-        const width = hasWindow ? window.innerWidth : null;
-        return {height, width};
+        const screenHeight = hasWindow ? window.innerHeight : null;
+        const screenWidth = hasWindow ? window.innerWidth : null;
+        return {screenHeight, screenWidth};
     };
 
-    const [windowDimensions, setWindowDimensions] = useState<{height: number | null, width: number | null}>(getWindowDimensions());
+    const [windowDimensions, setWindowDimensions] = useState<{screenHeight: number | null, screenWidth: number | null}>(getWindowDimensions());
 
     function handleResize() {
         setWindowDimensions(getWindowDimensions());

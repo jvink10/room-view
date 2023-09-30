@@ -33,13 +33,13 @@ export default function RoomPage() {
     const [isTabVisible, setIsTabVisible] = useState<{ roomTab: boolean; photosphereTab: boolean }>({roomTab: true, photosphereTab: true});
     const [isPinging, setIsPinging] = useState<boolean>(true);
 
-    const { height, width } = useWindowDimensions();
+    const { screenHeight, screenWidth } = useWindowDimensions();
     useEffect(() => {
-        if (width) {
-            const screenLg = width >= 1024;
+        if (screenWidth) {
+            const screenLg = screenWidth >= 1024;
             setIsTabVisible({roomTab: screenLg, photosphereTab: screenLg});
         };
-    }, [width]);
+    }, [screenWidth]);
 
     //Change background image file
     const backgroundFileInputRef = useRef<HTMLInputElement>(null);

@@ -1,6 +1,8 @@
 'use client'
 import { ReactPhotoSphereViewer } from 'react-photo-sphere-viewer';
 
+import useWindowDimensions from '../hooks/useWindowDimensions';
+
 type Props = {
     id: number;
     name: string;
@@ -12,13 +14,17 @@ type Props = {
 };
 
 export default function PhotoSphere(props: Props) {
-    const topOffset = (props.topPos >= 80 ? "-top-[300px]" : (props.topPos <= 20 ? "-top-[16px]" : "-top-[158px]"));
-    const leftOffset = (props.leftPos >= 80 ? "-left-[284px]" : (props.leftPos <= 20 ? "" : "-left-[142px]"))
+    //Determine position offset
+    const topDiff = 50 - props.topPos;
+    const topOffset = Math.floor(topDiff * 3 - 160);
+
+    const leftDiff = 50 - props.leftPos;
+    const leftOffset = Math.floor(leftDiff * 3 - 144);
 
     return (
         <div className={`absolute group border-2 rounded-full border-white h-4 w-4 ${props.color ? props.color : "bg-gray-400"}`} style={{top: `calc(${props.topPos}% - 8px)`, left: `calc(${props.leftPos}% - 8px)`}}>
             <div className={`relative rounded-full h-4 w-4 -top-0.5 -left-0.5 bg-white ${props.ping ? "animate-ping" : "hidden"}`}></div>
-            <div className={`relative hidden group-hover:block h-[300px] w-[300px] ${topOffset} ${leftOffset} z-10`}>
+            <div className={`relative hidden group-hover:block h-[300px] w-[300px] z-10`} style={{top: `${topOffset}px`, left: `${leftOffset}px`}}>
                 <ReactPhotoSphereViewer
                     src={props.image}
                     height={"100%"}
