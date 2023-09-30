@@ -32,6 +32,8 @@ Version 1.0.0
 - Put things into components or custom hooks and such
 
 ## Experiment
+- Swap react-photo-sphere-viewer out with photo-sphere-viewer
+- Add equirectangular tiles adapter to photospheres for faster load https://photo-sphere-viewer.js.org/guide/adapters/equirectangular-tiles.html#example
 - Remove map and photospheres from home page for faster load
 - Actual google maps implementation
 - Customise setting toggle for website

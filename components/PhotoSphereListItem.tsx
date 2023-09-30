@@ -1,21 +1,21 @@
 type Props = {
-    photosphere: { id: number; name: string; image: string; topPos: string; leftPos: string; color?: string };
+    photosphere: { id: number; name: string; image: string; topPos: number; leftPos: number; color?: string };
     updatePhotosphere: Function;
     removePhotosphere: Function;
 };
 
 export default function PhotoSphereListItem(props: Props) {
-    const textVerification = (name: string, value: string) => {
+    const inputVerification = (name: string, value: string | number) => {
         if (name == "name") {
-            const nameRegex = /^.{0,20}$/
-            if (nameRegex.test(value)) {
+            const nameRegex = /^.{0,25}$/
+            if (nameRegex.test(value.toString())) {
                 return true;
             };
         };
 
         if (name == "topPos" || name == "leftPos") {
-            const posRegex = /^(100|\d{0,2})%$/
-            if (posRegex.test(value)) {
+            const posRegex = /^(100|\d{0,2})$/
+            if (posRegex.test(value.toString())) {
                 return true;
             };
         };
@@ -23,10 +23,10 @@ export default function PhotoSphereListItem(props: Props) {
         return false;
     };
     
-    const handleUpdate = (event: { target: { name: string; value: string } } ) => {
+    const handleUpdate = (event: { target: { name: string; value: string | number } } ) => {
         const { name, value } = event.target;
 
-        if (textVerification(name, value)) {
+        if (inputVerification(name, value)) {
             const newPhotosphere = {...props.photosphere, [name]: value};
             props.updatePhotosphere(newPhotosphere);
         };
@@ -48,11 +48,11 @@ export default function PhotoSphereListItem(props: Props) {
                     <div className="flex flex-col lg:flex-row justify-evenly">
                         <div className="basis-1/2">
                             <p>Vertical Position</p>
-                            <input type="text" name="topPos" value={props.photosphere.topPos} onChange={handleUpdate} className="w-16 text-center" />
+                            <input type="number" name="topPos" value={props.photosphere.topPos} onChange={handleUpdate} className="w-16 text-center" />
                         </div>
                         <div className="basis-1/2">
                             <p>Horizontal Position</p>
-                            <input type="text" name="leftPos" value={props.photosphere.leftPos} onChange={handleUpdate} className="w-16 text-center" />
+                            <input type="number" name="leftPos" value={props.photosphere.leftPos} onChange={handleUpdate} className="w-16 text-center" />
                         </div>
                     </div>
                     <div>

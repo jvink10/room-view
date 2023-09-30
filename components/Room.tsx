@@ -9,7 +9,7 @@ type Props = {
     height: number;
     width: number;
     ping?: boolean;
-    photospheres?: Array<{id: number; name: string; image: string; topPos: string; leftPos: string; color?: string}>;
+    photospheres?: Array<{id: number; name: string; image: string; topPos: number; leftPos: number; color?: string}>;
 };
 
 export default function Room(props: Props) {

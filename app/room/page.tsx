@@ -15,7 +15,7 @@ export default function RoomPage() {
         id: 1, name: "New Room", image: "/white-background.png", height: 1000, width: 1000,
     });
 
-    const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: string; leftPos: string; color?: string; }>>([]);
+    const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; color?: string; }>>([]);
 
     useEffect(() => {
         const screenLg = window.innerWidth >= 1024;
@@ -69,7 +69,7 @@ export default function RoomPage() {
             const photosphere = event.target.files[0];
             const photosphereUrl = URL.createObjectURL(photosphere);
             const id = photospheres.reduce((prev, current) => (prev > current.id) ? prev : current.id, -1) + 1;
-            const newPhotosphere = {id: id, name: "New Photosphere", image: photosphereUrl, topPos: "50%", leftPos: "50%"};
+            const newPhotosphere = {id: id, name: "New Photosphere", image: photosphereUrl, topPos: 50, leftPos: 50};
             const newPhotospheres = [...photospheres];
             newPhotospheres.push(newPhotosphere);
             setPhotospheres(newPhotospheres);
@@ -80,7 +80,7 @@ export default function RoomPage() {
         photosphereFileInput.current?.click();
     };
 
-    const updatePhotosphere = (newPhotosphere: { id: number; name: string; image: string; topPos: string; leftPos: string; color?: string; }) => {
+    const updatePhotosphere = (newPhotosphere: { id: number; name: string; image: string; topPos: number; leftPos: number; color?: string; }) => {
         const id = newPhotosphere.id;
         setPhotospheres(prevPhotospheres => {
             const index = prevPhotospheres.findIndex(photosphere => photosphere.id === id);
