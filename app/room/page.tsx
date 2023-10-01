@@ -16,6 +16,7 @@ export default function RoomPage() {
     //Setting default Room values
     const [background, setBackground] = useState<{ id: number; name: string; image: string; height: number; width: number }>(newRoom.background);
     const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; color?: string; }>>([]);
+    const [groups, setGroups] = useState<Array<{ name: string, photosphereIds: number[], subGroup?: Array<{ name: string, photosphereIds: number[] }> }>>(newRoom.groups);
 
     //Checking search parameters
     const searchParams = useSearchParams();
@@ -24,9 +25,11 @@ export default function RoomPage() {
         if (searchParamsName === "Example Room") {
             setBackground(exampleRoom.background);
             setPhotospheres(exampleRoom.photospheres);
+            setGroups(exampleRoom.groups);
         } else {
             setBackground(newRoom.background);
             setPhotospheres(newRoom.photospheres);
+            setGroups(newRoom.groups);
         };
     }, [searchParams, newRoom, exampleRoom]);
 
@@ -150,6 +153,9 @@ export default function RoomPage() {
                         <div className={`${isPinging ? "" : "hidden"} absolute rounded-full h-4 w-4 -top-px -left-0.5 bg-photosphere-gray animate-ping`}></div>
                         <span className="ml-3 text-sm font-medium">Photosphere Pinging</span>
                     </label>
+                </div>
+                <div className="border-t border-gray-100 py-8 px-4">
+
                 </div>
             </section>
             <section className="relative p-8">

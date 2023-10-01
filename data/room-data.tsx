@@ -1,6 +1,14 @@
 export const newRoom = {
     background: {id: 1, name: "New Room", image: "/white-background.jpg", height: 1000, width: 1000},
     photospheres: [],
+    groups: [
+        {name: "Colour", photosphereIds: [], subGroup: [
+            {name: "gray", photosphereIds: []},
+            {name: "blue", photosphereIds: []},
+            {name: "green", photosphereIds: []},
+            {name: "yellow", photosphereIds: []},
+        ],
+    }],
 };
 
 export const exampleRoom = {
@@ -15,4 +23,12 @@ export const exampleRoom = {
         {id: 7, name: "Lions Park Parking", image: "/lions-park-parking.jpg", topPos: 22, leftPos: 67},
         {id: 8, name: "St. Josephs Lunch Area", image: "/st-josephs-lunch-area.jpg", topPos: 87, leftPos: 67, color: "bg-photosphere-yellow"},
     ],
+    groups: [
+        {name: "Colour", photosphereIds: [1, 2, 3, 4, 5, 6, 7, 8], subGroup: [
+            {name: "gray", photosphereIds: [4, 5, 6, 7]},
+            {name: "blue", photosphereIds: [2]},
+            {name: "green", photosphereIds: [1, 3]},
+            {name: "yellow", photosphereIds: [8]},
+        ],
+    }],
 };
