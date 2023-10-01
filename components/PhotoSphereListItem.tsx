@@ -32,8 +32,8 @@ export default function PhotoSphereListItem(props: Props) {
     };
 
     const handleRemove = () => {
-        const id = props.photosphere.id;
-        props.removePhotosphere(id);
+        const { id, name } = props.photosphere;
+        props.removePhotosphere(id, name);
     };
 
     return (

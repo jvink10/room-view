@@ -10,6 +10,7 @@ import { newRoom, exampleRoom } from '../../data/room-data';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import Room from '../../components/Room';
 import PhotoSphereListItem from '../../components/PhotoSphereListItem';
+import Confirm from '../../components/Confirm';
 
 export default function RoomPage() {
     //Setting default Room values
@@ -94,11 +95,24 @@ export default function RoomPage() {
         });
     };
 
-    const removePhotosphere = (id: number) => {
+    //Delete a photosphere
+    const [photosphereToRemove, setPhotosphereToRemove] = useState<{id: Number; name: string} | undefined>();
+
+    const removePhotosphere = (id: number, name: string) => {
+        setPhotosphereToRemove({id: id, name: name});
+    };
+
+    const confirmRemovePhotosphere = () => {
+        const id = photosphereToRemove?.id;
         setPhotospheres(prevPhotospheres => {
             const updatedPhotospheres = prevPhotospheres.filter(photosphere => photosphere.id !== id);
             return updatedPhotospheres;
         });
+        setPhotosphereToRemove(undefined);
+    };
+
+    const denyRemovePhotosphere = () => {
+        setPhotosphereToRemove(undefined);
     };
 
     //Change tab visibility
@@ -169,6 +183,9 @@ export default function RoomPage() {
                     ))}
                 </ul>
             </section>
+            <div className={`${photosphereToRemove ? "" : "hidden"}`}>
+                <Confirm confirmFunction={confirmRemovePhotosphere} denyFunction={denyRemovePhotosphere} confirmText="Are you sure you want to delete this photosphere?" confirmName={photosphereToRemove?.name} />
+            </div>
         </main>
     );
 };
