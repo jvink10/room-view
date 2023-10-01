@@ -132,7 +132,8 @@ export default function RoomPage() {
                 <div className="border-t border-gray-100 py-8 px-4">
                     <label className="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" checked={isPinging} onChange={handlePinging} className="sr-only" />
-                        <div className={`relative rounded-full h-4 w-4 -top-0.5 -left-0.5 bg-gray-400 ${isPinging ? "animate-ping" : ""}`}></div>
+                        <div className={`relative border-2 rounded-full border-photosphere-gray h-4 w-4 -top-0.5 -left-0.5 bg-white`}></div>
+                        <div className={`${isPinging ? "" : "hidden"} absolute rounded-full h-4 w-4 -top-px -left-0.5 bg-photosphere-gray animate-ping`}></div>
                         <span className="ml-3 text-sm font-medium">Photosphere Pinging</span>
                     </label>
                 </div>
