@@ -14,6 +14,14 @@ const config: Config = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'grid': "url('/grid.jpg')",
       },
+      colors: {
+        photosphere: {
+          gray: '#9ca3af',
+          blue: '#38bdf8',
+          green: '#22c55e',
+          yellow: '#facc15',
+        },
+      },
     },
   },
   plugins: [],
