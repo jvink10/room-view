@@ -6,13 +6,10 @@ export default function Home() {
     	<main>
 			<section className="my-8 mx-auto border-2 border-gray-300 w-fit">
 				<Room
-					id={exampleRoom.background.id}
-                    name={exampleRoom.background.name}
-					image={exampleRoom.background.image}
-					height={exampleRoom.background.height}
-					width={exampleRoom.background.width}
-                    ping={true}
+					background={exampleRoom.background}
 					photospheres={exampleRoom.photospheres}
+                    groups={exampleRoom.groups}
+                    ping={true}
 				/>
 			</section>
 			<section>
