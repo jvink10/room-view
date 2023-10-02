@@ -15,25 +15,21 @@ import Confirm from '../../components/Confirm';
 export default function RoomPage() {
     //Setting default Room values
     const [background, setBackground] = useState<{ id: number; name: string; image: string; height: number; width: number }>(newRoom.background);
-    const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; visible: boolean; color: string; time: string }>>([]);
+    const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; visible: boolean; groups: Array<{ group: string; subGroup: string }> }>>([]);
     const [groups, setGroups] = useState<Array<{ name: string; subGroups: Array<{ name: string; visible: boolean }> }>>(newRoom.groups);
 
-    //Setting group visibility
+    //Setting photosphere visibility
     useEffect(() => {
         setPhotospheres(prevPhotospheres => {
             const newPhotospheres = [...prevPhotospheres];
 
-            const colorSubGroups = groups.find(group => group.name == "Colour")?.subGroups;
-            const timeSubGroups = groups.find(group => group.name == "Time")?.subGroups;
-
             newPhotospheres.forEach(photosphere => {
-                const color = photosphere.color;
-                const time = photosphere.time;
-
-                const colorSubGroup = colorSubGroups?.find(subGroup => subGroup.name == color);
-                const timeSubGroup = timeSubGroups?.find(subGroup => subGroup.name == time);
-
-                if (colorSubGroup?.visible && timeSubGroup?.visible) {
+                if (photosphere.groups.every(photosphereGroup => {
+                    const group = groups.find(group => group.name === photosphereGroup.group);
+                    const subGroup = group?.subGroups.find(subGroup => subGroup.name === photosphereGroup.subGroup);
+                    const visible = subGroup?.visible === true;
+                    return visible;
+                })) {
                     photosphere.visible = true;
                 } else {
                     photosphere.visible = false;
@@ -101,7 +97,7 @@ export default function RoomPage() {
             const photosphere = event.target.files[0];
             const photosphereUrl = URL.createObjectURL(photosphere);
             const id = photospheres.reduce((prev, current) => (prev > current.id) ? prev : current.id, -1) + 1;
-            const newPhotosphere = {id: id, name: "New Photosphere", image: photosphereUrl, topPos: 50, leftPos: 50, visible: true, color: "gray", time: "day"};
+            const newPhotosphere = {id: id, name: "New Photosphere", image: photosphereUrl, topPos: 50, leftPos: 50, visible: true, groups: [{group: "Colour", subGroup: "gray"}, {group: "Time", subGroup: "day"}]};
             const newPhotospheres = [...photospheres];
             newPhotospheres.push(newPhotosphere);
             setPhotospheres(newPhotospheres);
@@ -109,7 +105,7 @@ export default function RoomPage() {
     };
 
     //Change photosphere data
-    const updatePhotosphere = (newPhotosphere: { id: number; name: string; image: string; topPos: number; leftPos: number; visible: boolean; color: string; time: string }) => {
+    const updatePhotosphere = (newPhotosphere: { id: number; name: string; image: string; topPos: number; leftPos: number; visible: boolean; groups: Array<{ group: string; subGroup: string }> }) => {
         const id = newPhotosphere.id;
         setPhotospheres(prevPhotospheres => {
             const index = prevPhotospheres.findIndex(photosphere => photosphere.id === id);
