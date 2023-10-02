@@ -19,7 +19,10 @@ export default function PhotoSphereListItem(props: Props) {
 
     const handleUpdateColor = (event: React.MouseEvent<HTMLButtonElement>) => {
         const name = event.currentTarget.name;
-        const newPhotosphere = {...props.photosphere, color: name};
+        const prevGroups = props.photosphere.groups;
+        const colorIndex = prevGroups.findIndex(preGroup => preGroup.group === "Color");
+        prevGroups.splice(colorIndex, 1);
+        const newPhotosphere = {...props.photosphere, groups: [...prevGroups, {group: "Color", subGroup: name}]};
         props.updatePhotosphere(newPhotosphere);
     };
 
