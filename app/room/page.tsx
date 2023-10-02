@@ -202,6 +202,16 @@ export default function RoomPage() {
 
             return updatedGroups;
         });
+        
+        setPhotospheres(prevPhotospheres => {
+            const newPhotospheres = [...prevPhotospheres];
+
+            newPhotospheres.forEach(photosphere => {
+                photosphere.groups.push({group: "new group", subGroup: "new sub group"});
+            });
+
+            return newPhotospheres;
+        });
     };
 
     //Change tab visibility
