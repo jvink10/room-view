@@ -21,8 +21,8 @@ export default function GroupListItem(props: Props) {
     return (
         <div>
             {props.groups.map((group, groupIndex) => (
-                <div>
-                    <h3 key={groupIndex}>{group.name}</h3>
+                <div key={groupIndex}>
+                    <h3>{group.name}</h3>
                     {group.subGroups.map((subGroup, subGroupIndex) => (
                         <div key={subGroupIndex}>
                             <button onClick={() => toggleGroupVisibility(group.name, subGroup.name)} className={`${subGroup.visible ? "" : "text-black/25"}`}>{subGroup.name}</button>
