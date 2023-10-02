@@ -16,44 +16,32 @@ export default function RoomPage() {
     //Setting default Room values
     const [background, setBackground] = useState<{ id: number; name: string; image: string; height: number; width: number }>(newRoom.background);
     const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; visible: boolean; color: string; time: string }>>([]);
-    const [groups, setGroups] = useState<Array<{ name: string; subGroups: Array<{ name: string; visible: boolean; photosphereIds: number[] }> }>>(newRoom.groups);
+    const [groups, setGroups] = useState<Array<{ name: string; subGroups: Array<{ name: string; visible: boolean }> }>>(newRoom.groups);
 
     //Setting group visibility
     useEffect(() => {
-        const visiblePhotospheres: number[] = [];
+        setPhotospheres(prevPhotospheres => {
+            const newPhotospheres = [...prevPhotospheres];
 
-        const groupIds: Array<number[]> = [];
+            const colorSubGroups = groups.find(group => group.name == "Colour")?.subGroups;
+            const timeSubGroups = groups.find(group => group.name == "Time")?.subGroups;
 
-        //Collect an array of photosphere IDs for each group
-        groups.forEach(group => {
-            const subGroupIds: number[] = [];
+            newPhotospheres.forEach(photosphere => {
+                const color = photosphere.color;
+                const time = photosphere.time;
 
-            //Collect all photosphere IDs within the visible sub groups
-            group.subGroups?.forEach(subGroup => {
-                if (subGroup.visible === true) {
-                    subGroupIds.push(...subGroup.photosphereIds);
+                const colorSubGroup = colorSubGroups?.find(subGroup => subGroup.name == color);
+                const timeSubGroup = timeSubGroups?.find(subGroup => subGroup.name == time);
+
+                if (colorSubGroup?.visible && timeSubGroup?.visible) {
+                    photosphere.visible = true;
+                } else {
+                    photosphere.visible = false;
                 };
             });
 
-            groupIds.push(subGroupIds);
+            return newPhotospheres;
         });
-
-        //Filter for IDs that exist in all groups
-        groupIds[0].forEach(id => {
-            if (groupIds.every(group => {
-                return group.includes(id);
-            })) {
-                visiblePhotospheres.push(id);
-            };
-        });
-
-        //Set visibility
-        const newPhotospheres = photospheres.map(photosphere => ({
-            ...photosphere,
-            visible: visiblePhotospheres.includes(photosphere.id),
-        }));
-
-        setPhotospheres(newPhotospheres);
     }, [groups]);
 
     //Checking search parameters

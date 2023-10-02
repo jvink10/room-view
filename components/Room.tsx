@@ -5,7 +5,7 @@ import PhotoSphere from '../components/PhotoSphere';
 type Props = {
     background: { id: number; name: string; image: string; height: number; width: number};
     photospheres?: Array<{id: number; name: string; image: string; topPos: number; leftPos: number; visible: boolean; color: string; time: string}>;
-    groups: Array<{ name: string, subGroups: Array<{ name: string, visible: boolean, photosphereIds: number[] }> }>;
+    groups: Array<{ name: string; subGroups: Array<{ name: string; visible: boolean }> }>;
     ping: boolean;
 };
 

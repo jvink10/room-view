@@ -3,14 +3,14 @@ export const newRoom = {
     photospheres: [],
     groups: [
         {name: "Colour", subGroups: [
-            {name: "Gray", visible: true, photosphereIds: []},
-            {name: "Blue", visible: true, photosphereIds: []},
-            {name: "Green", visible: true, photosphereIds: []},
-            {name: "Yellow", visible: true, photosphereIds: []},
+            {name: "gray", visible: true},
+            {name: "blue", visible: true},
+            {name: "green", visible: true},
+            {name: "yellow", visible: true},
         ]},
         {name: "Time", subGroups: [
-            {name: "Day", visible: true, photosphereIds: []},
-            {name: "Night", visible: true, photosphereIds: []},
+            {name: "day", visible: true},
+            {name: "night", visible: true},
         ]},
     ],
 };
@@ -29,14 +29,14 @@ export const exampleRoom = {
     ],
     groups: [
         {name: "Colour", subGroups: [
-            {name: "gray", visible: true, photosphereIds: [4, 5, 6, 7]},
-            {name: "blue", visible: true, photosphereIds: [2]},
-            {name: "green", visible: true, photosphereIds: [1, 3]},
-            {name: "yellow", visible: true, photosphereIds: [8]},
+            {name: "gray", visible: true},
+            {name: "blue", visible: true},
+            {name: "green", visible: true},
+            {name: "yellow", visible: true},
         ]},
         {name: "Time", subGroups: [
-            {name: "day", visible: true, photosphereIds: [1, 2, 3, 4, 5, 6, 7, 8]},
-            {name: "night", visible: true, photosphereIds: []},
+            {name: "day", visible: true},
+            {name: "night", visible: true},
         ]},
     ],
 };
