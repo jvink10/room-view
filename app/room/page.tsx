@@ -96,8 +96,16 @@ export default function RoomPage() {
         if (event.target.files && event.target.files[0]) {
             const photosphere = event.target.files[0];
             const photosphereUrl = URL.createObjectURL(photosphere);
+
             const id = photospheres.reduce((prev, current) => (prev > current.id) ? prev : current.id, -1) + 1;
-            const newPhotosphere = {id: id, name: "New Photosphere", image: photosphereUrl, topPos: 50, leftPos: 50, visible: true, groups: [{group: "Colour", subGroup: "gray"}, {group: "Time", subGroup: "day"}]};
+            const newGroups: Array<{ group: string; subGroup: string }> = [];
+            groups.forEach(group => {
+                const groupName = group.name;
+                const subGroupName = group.subGroups[0].name;
+                newGroups.push({group: groupName, subGroup: subGroupName});
+            });
+
+            const newPhotosphere = {id: id, name: "New Photosphere", image: photosphereUrl, topPos: 50, leftPos: 50, visible: true, groups: newGroups };
             const newPhotospheres = [...photospheres];
             newPhotospheres.push(newPhotosphere);
             setPhotospheres(newPhotospheres);
