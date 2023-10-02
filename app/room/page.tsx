@@ -8,6 +8,7 @@ import { AiOutlineArrowRight } from 'react-icons/ai';
 
 import { newRoom, exampleRoom } from '../../data/room-data';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
+import GroupListItem from '../../components/GroupListItem';
 import Room from '../../components/Room';
 import PhotoSphereListItem from '../../components/PhotoSphereListItem';
 import Confirm from '../../components/Confirm';
@@ -149,13 +150,16 @@ export default function RoomPage() {
     };
 
     //Toggle photosphere group visibility
-    const toggleGroupVisibility = (groupIndex: number, subGroupIndex: number) => {
-        const prevVisibility = groups[groupIndex].subGroups[subGroupIndex].visible;
+    const toggleGroupVisibility = (groupName: string, subGroupName: string) => {
+        const prevVisibility = groups.find(group => group.name === groupName)?.subGroups.find(subGroup => subGroup.name === subGroupName)?.visible;
         
         setGroups(prevGroups => {
+            const groupIndex = prevGroups.findIndex(group => group.name === groupName);
+            const subGroupIndex = prevGroups[groupIndex].subGroups.findIndex(subGroup => subGroup.name === subGroupName);
+
             const updatedGroups = [...prevGroups];
             const updatedGroup = {...updatedGroups[groupIndex]};
-            const updatedSubGroups = [...updatedGroup.subGroups];
+            const updatedSubGroups = updatedGroup.subGroups;
             const updatedSubGroup = {
                 ...updatedSubGroups[subGroupIndex],
                 visible: !prevVisibility,
@@ -206,16 +210,8 @@ export default function RoomPage() {
                     </label>
                 </div>
                 <div className="border-t border-gray-100 p-8 text-left">
-                    {groups.map((group, groupIndex) => (
-                        <div key={groupIndex}>
-                            <h3>{group.name}</h3>
-                            {group.subGroups?.map((subGroup, subGroupIndex) => (
-                                <div key={subGroupIndex}>
-                                    <button onClick={() => toggleGroupVisibility(groupIndex, subGroupIndex)} className={`${subGroup.visible ? "" : "text-black/25"}`}>{subGroup.name}</button>
-                                </div>
-                            ))}
-                            <button className="text-xs text-black/50">Sub Group +</button>
-                        </div>
+                    {groups.map((group, index) => (
+                        <GroupListItem key={index} group={group} updateGroupVisibility={toggleGroupVisibility} />
                     ))}
                     <button className="text-sm text-black/50">Group +</button>
                 </div>
