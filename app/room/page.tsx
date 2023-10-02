@@ -177,6 +177,33 @@ export default function RoomPage() {
         });
     };
 
+    const newSubGroup = (groupName: string) => {
+        setGroups(prevGroups => {
+            const groupIndex = prevGroups.findIndex(group => group.name === groupName);
+
+            const updatedGroups = [...prevGroups];
+            const updatedGroup = updatedGroups[groupIndex];
+            const updatedSubGroups = updatedGroup.subGroups;
+
+            updatedSubGroups.push({name: "new sub group", visible: true});
+
+            updatedGroup.subGroups = updatedSubGroups;
+            updatedGroups[groupIndex] = updatedGroup;
+
+            return updatedGroups;
+        });
+    };
+
+    const newGroup = () => {
+        setGroups(prevGroups => {
+            const updatedGroups = [...prevGroups];
+
+            updatedGroups.push({name: "new group", subGroups: [{name: "new sub group", visible: true}]});
+
+            return updatedGroups;
+        });
+    };
+
     //Change tab visibility
     const handleTabVisible = (tab: string, visible: boolean) => {
         setIsTabVisible({
@@ -214,7 +241,7 @@ export default function RoomPage() {
                     </label>
                 </div>
                 <div className="border-t border-gray-100 p-8 text-left">
-                    <GroupListItem groups={groups} updateGroupVisibility={toggleGroupVisibility} />
+                    <GroupListItem groups={groups} updateGroupVisibility={toggleGroupVisibility} newSubGroup={newSubGroup} newGroup={newGroup} />
                 </div>
             </section>
             <section className="relative p-8">
