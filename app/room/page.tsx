@@ -157,9 +157,13 @@ export default function RoomPage() {
             const groupIndex = prevGroups.findIndex(group => group.name === groupName);
             const subGroupIndex = prevGroups[groupIndex].subGroups.findIndex(subGroup => subGroup.name === subGroupName);
 
+            if (groupIndex === -1 || subGroupIndex === -1) {
+                return prevGroups;
+            };
+
             const updatedGroups = [...prevGroups];
             const updatedGroup = {...updatedGroups[groupIndex]};
-            const updatedSubGroups = updatedGroup.subGroups;
+            const updatedSubGroups = [...updatedGroup.subGroups];
             const updatedSubGroup = {
                 ...updatedSubGroups[subGroupIndex],
                 visible: !prevVisibility,
@@ -210,10 +214,7 @@ export default function RoomPage() {
                     </label>
                 </div>
                 <div className="border-t border-gray-100 p-8 text-left">
-                    {groups.map((group, index) => (
-                        <GroupListItem key={index} group={group} updateGroupVisibility={toggleGroupVisibility} />
-                    ))}
-                    <button className="text-sm text-black/50">Group +</button>
+                    <GroupListItem groups={groups} updateGroupVisibility={toggleGroupVisibility} />
                 </div>
             </section>
             <section className="relative p-8">
