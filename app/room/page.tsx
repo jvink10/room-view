@@ -15,10 +15,10 @@ import Confirm from '../../components/Confirm';
 export default function RoomPage() {
     //Setting default Room values
     const [background, setBackground] = useState<{ id: number; name: string; image: string; height: number; width: number }>(newRoom.background);
-    const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; visible: boolean; color?: string; }>>([]);
-    const [groups, setGroups] = useState<Array<{ name: string, visible: boolean, photosphereIds: number[], subGroups: Array<{ name: string, visible: boolean, photosphereIds: number[] }> }>>(newRoom.groups);
+    const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; visible: boolean; color: string; time: string }>>([]);
+    const [groups, setGroups] = useState<Array<{ name: string; subGroups: Array<{ name: string; visible: boolean; photosphereIds: number[] }> }>>(newRoom.groups);
 
-    //Setting photosphere group visibility
+    //Setting group visibility
     useEffect(() => {
         const visiblePhotospheres: number[] = [];
 
@@ -113,7 +113,7 @@ export default function RoomPage() {
             const photosphere = event.target.files[0];
             const photosphereUrl = URL.createObjectURL(photosphere);
             const id = photospheres.reduce((prev, current) => (prev > current.id) ? prev : current.id, -1) + 1;
-            const newPhotosphere = {id: id, name: "New Photosphere", image: photosphereUrl, topPos: 50, leftPos: 50, visible: true};
+            const newPhotosphere = {id: id, name: "New Photosphere", image: photosphereUrl, topPos: 50, leftPos: 50, visible: true, color: "gray", time: "day"};
             const newPhotospheres = [...photospheres];
             newPhotospheres.push(newPhotosphere);
             setPhotospheres(newPhotospheres);
@@ -121,7 +121,7 @@ export default function RoomPage() {
     };
 
     //Change photosphere data
-    const updatePhotosphere = (newPhotosphere: { id: number; name: string; image: string; topPos: number; leftPos: number; visible: boolean; color?: string; }) => {
+    const updatePhotosphere = (newPhotosphere: { id: number; name: string; image: string; topPos: number; leftPos: number; visible: boolean; color: string; time: string }) => {
         const id = newPhotosphere.id;
         setPhotospheres(prevPhotospheres => {
             const index = prevPhotospheres.findIndex(photosphere => photosphere.id === id);
@@ -156,7 +156,7 @@ export default function RoomPage() {
         setPhotosphereToRemove(undefined);
     };
 
-    //Toggle photosphere group visibilit
+    //Toggle photosphere group visibility
     const toggleGroupVisibility = (groupIndex: number, subGroupIndex: number) => {
         const prevVisibility = groups[groupIndex].subGroups[subGroupIndex].visible;
         
@@ -216,7 +216,7 @@ export default function RoomPage() {
                 <div className="border-t border-gray-100 p-8 text-left">
                     {groups.map((group, groupIndex) => (
                         <div key={groupIndex}>
-                            <h3 className={`${group.visible ? "" : "text-black/25"} text-lg`}>{group.name}</h3>
+                            <h3>{group.name}</h3>
                             {group.subGroups?.map((subGroup, subGroupIndex) => (
                                 <div key={subGroupIndex}>
                                     <button onClick={() => toggleGroupVisibility(groupIndex, subGroupIndex)} className={`${subGroup.visible ? "" : "text-black/25"}`}>{subGroup.name}</button>
@@ -230,13 +230,10 @@ export default function RoomPage() {
             </section>
             <section className="relative p-8">
                 <Room
-                    id={background.id}
-                    name={background.name}
-					image={background.image}
-					height={background.height}
-					width={background.width}
-                    ping={isPinging}
+                    background={background}
 					photospheres={photospheres}
+                    groups={groups}
+                    ping={isPinging}
 				/>
                 <div onClick={() => handleTabVisible("roomTab", !isTabVisible.roomTab)} className="absolute border-t-[48px] border-t-gray-200 border-r-[48px] border-r-transparent top-0 left-0"></div>
                 <div onClick={() => handleTabVisible("photosphereTab", !isTabVisible.photosphereTab)} className="absolute border-t-[48px] border-t-gray-200 border-l-[48px] border-l-transparent top-0 right-0"></div>

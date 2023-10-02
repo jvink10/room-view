@@ -1,5 +1,5 @@
 type Props = {
-    photosphere: { id: number; name: string; image: string; topPos: number; leftPos: number; visible: boolean; color?: string };
+    photosphere: { id: number; name: string; image: string; topPos: number; leftPos: number; visible: boolean; color: string; time: string };
     updatePhotosphere: Function;
     removePhotosphere: Function;
 };
@@ -16,7 +16,7 @@ export default function PhotoSphereListItem(props: Props) {
     };
 
     const handleUpdateColor = (event: React.MouseEvent<HTMLButtonElement>) => {
-        const name = "bg-photosphere-" + event.currentTarget.name;
+        const name = event.currentTarget.name;
         const newPhotosphere = {...props.photosphere, color: name};
         props.updatePhotosphere(newPhotosphere);
     };
@@ -42,7 +42,7 @@ export default function PhotoSphereListItem(props: Props) {
                 <div className="flex flex-row justify-center gap-2">
                     <input type="text" name="name" value={props.photosphere.name} onChange={handleUpdateName} className="text-center" />
                     <div className="relative group/color my-auto">
-                        <div className={`border-2 rounded-full border-white h-4 w-4 ${props.photosphere.color ? props.photosphere.color : "bg-photosphere-gray"}`}></div>
+                        <div className={`border-2 rounded-full border-white h-4 w-4 bg-photosphere-${props.photosphere.color}`}></div>
                         <div className="absolute hidden group-hover/color:grid gap-1 grid-cols-2 grid-rows-2 p-1 w-max right-0 bg-gray-100">
                             <button name="gray" onClick={handleUpdateColor} className="h-4 w-4 bg-photosphere-gray"></button>
                             <button name="green" onClick={handleUpdateColor} className="h-4 w-4 bg-photosphere-green"></button>
