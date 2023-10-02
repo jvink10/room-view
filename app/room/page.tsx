@@ -16,8 +16,8 @@ import Confirm from '../../components/Confirm';
 export default function RoomPage() {
     //Setting default Room values
     const [background, setBackground] = useState<{ id: number; name: string; image: string; height: number; width: number }>(newRoom.background);
-    const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; visible: boolean; groups: Array<{ group: string; subGroup: string }> }>>([]);
-    const [groups, setGroups] = useState<Array<{ name: string; subGroups: Array<{ name: string; visible: boolean }> }>>(newRoom.groups);
+    const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; color: string; visible: boolean; groups: Array<{ group: number; subGroup: number }> }>>([]);
+    const [groups, setGroups] = useState<Array<{ id: number; name: string; subGroups: Array<{ id: number; name: string; visible: boolean }> }>>(newRoom.groups);
 
     //Setting photosphere visibility
     useEffect(() => {
@@ -26,8 +26,8 @@ export default function RoomPage() {
 
             newPhotospheres.forEach(photosphere => {
                 if (photosphere.groups.every(photosphereGroup => {
-                    const group = groups.find(group => group.name === photosphereGroup.group);
-                    const subGroup = group?.subGroups.find(subGroup => subGroup.name === photosphereGroup.subGroup);
+                    const group = groups.find(group => group.id === photosphereGroup.group);
+                    const subGroup = group?.subGroups.find(subGroup => subGroup.id === photosphereGroup.subGroup);
                     const visible = subGroup?.visible === true;
                     return visible;
                 })) {
@@ -98,15 +98,13 @@ export default function RoomPage() {
             const photosphere = event.target.files[0];
             const photosphereUrl = URL.createObjectURL(photosphere);
 
-            const id = photospheres.reduce((prev, current) => (prev > current.id) ? prev : current.id, -1) + 1;
-            const newGroups: Array<{ group: string; subGroup: string }> = [];
+            const id = photospheres.reduce((previous, current) => (previous > current.id) ? previous : current.id, -1) + 1;
+            const newGroups: Array<{ group: number; subGroup: number }> = [];
             groups.forEach(group => {
-                const groupName = group.name;
-                const subGroupName = group.subGroups[0].name;
-                newGroups.push({group: groupName, subGroup: subGroupName});
+                newGroups.push({group: 0, subGroup: 0});
             });
 
-            const newPhotosphere = {id: id, name: "New Photosphere", image: photosphereUrl, topPos: 50, leftPos: 50, visible: true, groups: newGroups };
+            const newPhotosphere = {id: id, name: "New Photosphere", image: photosphereUrl, topPos: 50, leftPos: 50, color: "gray", visible: true, groups: newGroups };
             const newPhotospheres = [...photospheres];
             newPhotospheres.push(newPhotosphere);
             setPhotospheres(newPhotospheres);
@@ -114,7 +112,7 @@ export default function RoomPage() {
     };
 
     //Change photosphere data
-    const updatePhotosphere = (newPhotosphere: { id: number; name: string; image: string; topPos: number; leftPos: number; visible: boolean; groups: Array<{ group: string; subGroup: string }> }) => {
+    const updatePhotosphere = (newPhotosphere: { id: number; name: string; image: string; topPos: number; leftPos: number; color: string; visible: boolean; groups: Array<{ group: number; subGroup: number }> }) => {
         const id = newPhotosphere.id;
         setPhotospheres(prevPhotospheres => {
             const index = prevPhotospheres.findIndex(photosphere => photosphere.id === id);
@@ -150,55 +148,50 @@ export default function RoomPage() {
     };
 
     //Toggle photosphere group visibility
-    const toggleGroupVisibility = (groupName: string, subGroupName: string) => {
-        const prevVisibility = groups.find(group => group.name === groupName)?.subGroups.find(subGroup => subGroup.name === subGroupName)?.visible;
-        
+    const toggleGroupVisibility = (groupId: number, subGroupId: number) => {
+        const prevVisibility = groups[groupId].subGroups[subGroupId].visible;
+
         setGroups(prevGroups => {
-            const groupIndex = prevGroups.findIndex(group => group.name === groupName);
-            const subGroupIndex = prevGroups[groupIndex].subGroups.findIndex(subGroup => subGroup.name === subGroupName);
-
-            if (groupIndex === -1 || subGroupIndex === -1) {
-                return prevGroups;
-            };
-
             const updatedGroups = [...prevGroups];
-            const updatedGroup = {...updatedGroups[groupIndex]};
+            const updatedGroup = {...updatedGroups[groupId]};
             const updatedSubGroups = [...updatedGroup.subGroups];
             const updatedSubGroup = {
-                ...updatedSubGroups[subGroupIndex],
+                ...updatedSubGroups[subGroupId],
                 visible: !prevVisibility,
             };
 
-            updatedSubGroups[subGroupIndex] = updatedSubGroup;
+            updatedSubGroups[subGroupId] = updatedSubGroup;
             updatedGroup.subGroups = updatedSubGroups;
-            updatedGroups[groupIndex] = updatedGroup;
+            updatedGroups[groupId] = updatedGroup;
 
             return updatedGroups;
         });
     };
 
-    const newSubGroup = (groupName: string) => {
-        setGroups(prevGroups => {
-            const groupIndex = prevGroups.findIndex(group => group.name === groupName);
+    const newSubGroup = (groupId: number) => {
+        const newSubGroupId = groups[groupId].subGroups.reduce((previous, current) => (previous > current.id) ? previous : current.id, -1) + 1;
 
+        setGroups(prevGroups => {
             const updatedGroups = [...prevGroups];
-            const updatedGroup = updatedGroups[groupIndex];
+            const updatedGroup = updatedGroups[groupId];
             const updatedSubGroups = updatedGroup.subGroups;
 
-            updatedSubGroups.push({name: "new sub group", visible: true});
+            updatedSubGroups.push({id: newSubGroupId, name: "new sub group", visible: true});
 
             updatedGroup.subGroups = updatedSubGroups;
-            updatedGroups[groupIndex] = updatedGroup;
+            updatedGroups[groupId] = updatedGroup;
 
             return updatedGroups;
         });
     };
 
     const newGroup = () => {
+        const newGroupId = groups.reduce((previous, current) => (previous > current.id) ? previous : current.id, -1) + 1;
+
         setGroups(prevGroups => {
             const updatedGroups = [...prevGroups];
 
-            updatedGroups.push({name: "new group", subGroups: [{name: "new sub group", visible: true}]});
+            updatedGroups.push({id: newGroupId, name: "new group", subGroups: [{id: 0, name: "new sub group", visible: true}]});
 
             return updatedGroups;
         });
@@ -207,7 +200,7 @@ export default function RoomPage() {
             const newPhotospheres = [...prevPhotospheres];
 
             newPhotospheres.forEach(photosphere => {
-                photosphere.groups.push({group: "new group", subGroup: "new sub group"});
+                photosphere.groups.push({group: newGroupId, subGroup: 0});
             });
 
             return newPhotospheres;
