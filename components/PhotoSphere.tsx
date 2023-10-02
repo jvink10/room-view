@@ -9,6 +9,7 @@ type Props = {
     image: string;
     topPos: number;
     leftPos: number;
+    visible: boolean;
     color?: string;
     ping?: boolean;
 };
@@ -22,7 +23,7 @@ export default function PhotoSphere(props: Props) {
     const leftOffset = Math.floor(leftDiff * 3 - 144);
 
     return (
-        <div className={`absolute group border-2 rounded-full border-white h-4 w-4 ${props.color ? props.color : "bg-photosphere-gray"}`} style={{top: `calc(${props.topPos}% - 8px)`, left: `calc(${props.leftPos}% - 8px)`}}>
+        <div className={`${props.visible ? "" : "hidden"} absolute group border-2 rounded-full border-white h-4 w-4 ${props.color ? props.color : "bg-photosphere-gray"}`} style={{top: `calc(${props.topPos}% - 8px)`, left: `calc(${props.leftPos}% - 8px)`}}>
             <div className={`relative rounded-full h-4 w-4 -top-0.5 -left-0.5 bg-white ${props.ping ? "animate-ping" : "hidden"}`}></div>
             <div className={`relative hidden group-hover:block h-[300px] w-[300px] z-10`} style={{top: `${topOffset}px`, left: `${leftOffset}px`}}>
                 <ReactPhotoSphereViewer

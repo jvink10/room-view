@@ -15,8 +15,46 @@ import Confirm from '../../components/Confirm';
 export default function RoomPage() {
     //Setting default Room values
     const [background, setBackground] = useState<{ id: number; name: string; image: string; height: number; width: number }>(newRoom.background);
-    const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; color?: string; }>>([]);
-    const [groups, setGroups] = useState<Array<{ name: string, photosphereIds: number[], subGroup?: Array<{ name: string, photosphereIds: number[] }> }>>(newRoom.groups);
+    const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; visible: boolean; color?: string; }>>([]);
+    const [groups, setGroups] = useState<Array<{ name: string, visible: boolean, photosphereIds: number[], subGroups: Array<{ name: string, visible: boolean, photosphereIds: number[] }> }>>(newRoom.groups);
+
+    //Setting photosphere group visibility
+    useEffect(() => {
+        const visiblePhotospheres: number[] = [];
+
+        const groupIds: Array<number[]> = [];
+
+        //Collect an array of photosphere IDs for each group
+        groups.forEach(group => {
+            const subGroupIds: number[] = [];
+
+            //Collect all photosphere IDs within the visible sub groups
+            group.subGroups?.forEach(subGroup => {
+                if (subGroup.visible === true) {
+                    subGroupIds.push(...subGroup.photosphereIds);
+                };
+            });
+
+            groupIds.push(subGroupIds);
+        });
+
+        //Filter for IDs that exist in all groups
+        groupIds[0].forEach(id => {
+            if (groupIds.every(group => {
+                return group.includes(id);
+            })) {
+                visiblePhotospheres.push(id);
+            };
+        });
+
+        //Set visibility
+        const newPhotospheres = photospheres.map(photosphere => ({
+            ...photosphere,
+            visible: visiblePhotospheres.includes(photosphere.id),
+        }));
+
+        setPhotospheres(newPhotospheres);
+    }, [groups]);
 
     //Checking search parameters
     const searchParams = useSearchParams();
@@ -31,7 +69,7 @@ export default function RoomPage() {
             setPhotospheres(newRoom.photospheres);
             setGroups(newRoom.groups);
         };
-    }, [searchParams, newRoom, exampleRoom]);
+    }, []);
 
     //Setting initial Room settings
     const [isTabVisible, setIsTabVisible] = useState<{ roomTab: boolean; photosphereTab: boolean }>({roomTab: true, photosphereTab: true});
@@ -56,10 +94,10 @@ export default function RoomPage() {
         if (event.target.files && event.target.files[0]) {
             const background = event.target.files[0];
             const backgroundUrl = URL.createObjectURL(background);
-            setBackground({
-                ...background,
+            setBackground(prevBackground => ({
+                ...prevBackground,
                 image: backgroundUrl
-            });
+            }));
         };
     };
 
@@ -75,7 +113,7 @@ export default function RoomPage() {
             const photosphere = event.target.files[0];
             const photosphereUrl = URL.createObjectURL(photosphere);
             const id = photospheres.reduce((prev, current) => (prev > current.id) ? prev : current.id, -1) + 1;
-            const newPhotosphere = {id: id, name: "New Photosphere", image: photosphereUrl, topPos: 50, leftPos: 50};
+            const newPhotosphere = {id: id, name: "New Photosphere", image: photosphereUrl, topPos: 50, leftPos: 50, visible: true};
             const newPhotospheres = [...photospheres];
             newPhotospheres.push(newPhotosphere);
             setPhotospheres(newPhotospheres);
@@ -83,7 +121,7 @@ export default function RoomPage() {
     };
 
     //Change photosphere data
-    const updatePhotosphere = (newPhotosphere: { id: number; name: string; image: string; topPos: number; leftPos: number; color?: string; }) => {
+    const updatePhotosphere = (newPhotosphere: { id: number; name: string; image: string; topPos: number; leftPos: number; visible: boolean; color?: string; }) => {
         const id = newPhotosphere.id;
         setPhotospheres(prevPhotospheres => {
             const index = prevPhotospheres.findIndex(photosphere => photosphere.id === id);
@@ -116,6 +154,27 @@ export default function RoomPage() {
 
     const denyRemovePhotosphere = () => {
         setPhotosphereToRemove(undefined);
+    };
+
+    //Toggle photosphere group visibilit
+    const toggleGroupVisibility = (groupIndex: number, subGroupIndex: number) => {
+        const prevVisibility = groups[groupIndex].subGroups[subGroupIndex].visible;
+        
+        setGroups(prevGroups => {
+            const updatedGroups = [...prevGroups];
+            const updatedGroup = {...updatedGroups[groupIndex]};
+            const updatedSubGroups = [...updatedGroup.subGroups];
+            const updatedSubGroup = {
+                ...updatedSubGroups[subGroupIndex],
+                visible: !prevVisibility,
+            };
+
+            updatedSubGroups[subGroupIndex] = updatedSubGroup;
+            updatedGroup.subGroups = updatedSubGroups;
+            updatedGroups[groupIndex] = updatedGroup;
+
+            return updatedGroups;
+        });
     };
 
     //Change tab visibility
@@ -154,8 +213,19 @@ export default function RoomPage() {
                         <span className="ml-3 text-sm font-medium">Photosphere Pinging</span>
                     </label>
                 </div>
-                <div className="border-t border-gray-100 py-8 px-4">
-
+                <div className="border-t border-gray-100 p-8 text-left">
+                    {groups.map((group, groupIndex) => (
+                        <div key={groupIndex}>
+                            <h3 className={`${group.visible ? "" : "text-black/25"} text-lg`}>{group.name}</h3>
+                            {group.subGroups?.map((subGroup, subGroupIndex) => (
+                                <div key={subGroupIndex}>
+                                    <button onClick={() => toggleGroupVisibility(groupIndex, subGroupIndex)} className={`${subGroup.visible ? "" : "text-black/25"}`}>{subGroup.name}</button>
+                                </div>
+                            ))}
+                            <button className="text-xs text-black/50">Sub Group +</button>
+                        </div>
+                    ))}
+                    <button className="text-sm text-black/50">Group +</button>
                 </div>
             </section>
             <section className="relative p-8">

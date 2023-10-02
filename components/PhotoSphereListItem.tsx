@@ -1,5 +1,5 @@
 type Props = {
-    photosphere: { id: number; name: string; image: string; topPos: number; leftPos: number; color?: string };
+    photosphere: { id: number; name: string; image: string; topPos: number; leftPos: number; visible: boolean; color?: string };
     updatePhotosphere: Function;
     removePhotosphere: Function;
 };
@@ -37,7 +37,7 @@ export default function PhotoSphereListItem(props: Props) {
     };
 
     return (
-        <li className="group border-t border-gray-100 py-2 px-4">
+        <li className={`${props.photosphere.visible ? "" : "hidden"} group border-t border-gray-100 py-2 px-4`}>
             <div className="space-y-1">
                 <div className="flex flex-row justify-center gap-2">
                     <input type="text" name="name" value={props.photosphere.name} onChange={handleUpdateName} className="text-center" />
