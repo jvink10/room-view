@@ -221,6 +221,18 @@ export default function RoomPage() {
         });
     };
 
+    const updateGroup = (groupId: number, name: string) => {
+        setGroups(prevGroups => {
+            const newGroups = [...prevGroups];
+
+            const groupIndex = newGroups.findIndex(group => group.id === groupId);
+
+            newGroups[groupIndex].name = name;
+
+            return newGroups;
+        });
+    };
+
     const newSubGroup = (groupId: number) => {
         setGroups(prevGroups => {
             const groupIndex = groups.findIndex(group => group.id === groupId);
@@ -273,6 +285,29 @@ export default function RoomPage() {
         });
     };
 
+    const updateSubGroup = (groupId: number, subGroupId: number, name: string) => {
+        setGroups(prevGroups => {
+            const updatedGroups = [...prevGroups];
+
+            const groupIndex = updatedGroups.findIndex(group => group.id === groupId);
+
+            const updatedGroup = updatedGroups[groupIndex];
+            const updatedSubGroups = updatedGroup.subGroups;
+
+            const subGroupIndex = updatedSubGroups.findIndex(subGroup => subGroup.id === subGroupId);
+
+            const updatedSubGroup = updatedSubGroups[subGroupIndex];
+
+            updatedSubGroup.name = name;
+
+            updatedSubGroups[subGroupIndex] = updatedSubGroup;
+            updatedGroup.subGroups = updatedSubGroups;
+            updatedGroups[groupIndex] = updatedGroup;
+
+            return updatedGroups;
+        });
+    };
+
     //Change tab visibility
     const handleTabVisible = (tab: string, visible: boolean) => {
         setIsTabVisible({
@@ -310,7 +345,7 @@ export default function RoomPage() {
                     </label>
                 </div>
                 <div className="border-t border-gray-100 p-8 text-left">
-                    <GroupList groups={groups} updateGroupVisibility={toggleGroupVisibility} newGroup={newGroup} removeGroup={removeGroup} newSubGroup={newSubGroup} removeSubGroup={removeSubGroup} />
+                    <GroupList groups={groups} updateGroupVisibility={toggleGroupVisibility} newGroup={newGroup} removeGroup={removeGroup} updateGroup={updateGroup} newSubGroup={newSubGroup} removeSubGroup={removeSubGroup} updateSubGroup={updateSubGroup} />
                 </div>
             </section>
             <section className="relative p-8">

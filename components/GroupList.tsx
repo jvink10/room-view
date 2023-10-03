@@ -3,8 +3,10 @@ type Props = {
     updateGroupVisibility: Function;
     newGroup: Function;
     removeGroup: Function;
+    updateGroup: Function;
     newSubGroup: Function;
     removeSubGroup: Function;
+    updateSubGroup: Function;
 };
 
 export default function GroupList(props: Props) {
@@ -20,6 +22,10 @@ export default function GroupList(props: Props) {
         props.removeGroup(groupId);
     };
 
+    const updateGroup = (groupId: number, name: string ) => {
+        props.updateGroup(groupId, name);
+    };
+
     const newSubGroup = (groupId: number) => {
         props.newSubGroup(groupId);
     };
@@ -28,18 +34,25 @@ export default function GroupList(props: Props) {
         props.removeSubGroup(groupId, subGroupId);
     };
 
+    const updateSubGroup = (groupId: number, subGroupId: number, name: string) => {
+        props.updateSubGroup(groupId, subGroupId, name);
+    };
+
     return (
         <div>
             {props.groups.map((group) => (
                 <div key={group.id}>
                     <div className="flex flex-row justify-between group border-y border-white hover:border-gray-100">
-                        <h3>{group.name}</h3>
+                        <input type="text" value={group.name} onChange={(event) => updateGroup(group.id, event.target.value)} />
                         <button onClick={() => removeGroup(group.id)} className="hidden group-hover:inline-block">Remove</button>
                     </div>
                     {group.subGroups.map((subGroup) => (
                         <div key={subGroup.id} className="flex flex-row justify-between group border-y border-white hover:border-gray-100">
-                            <button onClick={() => toggleGroupVisibility(group.id, subGroup.id)} className={`${subGroup.visible ? "" : "text-black/25"}`}>{subGroup.name}</button>
-                            <button onClick={() => removeSubGroup(group.id, subGroup.id)} className="hidden group-hover:inline-block">Remove</button>
+                            <input type="text" value={subGroup.name} onChange={(event) => updateSubGroup(group.id, subGroup.id, event.target.value)} className={`${subGroup.visible ? "" : "text-black/25"}`} />
+                            <div className="flex flex-row gap-2">
+                                <button onClick={() => toggleGroupVisibility(group.id, subGroup.id)} className="hidden group-hover:inline-block">{subGroup.visible ? "Hide" : "Show"}</button>
+                                <button onClick={() => removeSubGroup(group.id, subGroup.id)} className="hidden group-hover:inline-block">Remove</button>
+                            </div>
                         </div>
                     ))}
                     <button onClick={() => newSubGroup(group.id)} className="text-xs text-black/50">Sub Group +</button>
