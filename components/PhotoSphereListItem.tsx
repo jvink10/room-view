@@ -1,8 +1,10 @@
 type Props = {
     photosphere: { id: number; name: string; image: string; topPos: number; leftPos: number; color: string; visible: boolean; groups: Array<{ group: number; subGroup: number }> };
+    groups: Array<{ id: number; name: string; subGroups: Array<{ id: number; name: string; visible: boolean }> }>;
     updatePhotosphereName: Function;
     updatePhotosphereColor: Function;
     updatePhotospherePosition: Function;
+    updatePhotosphereGroup: Function;
     removePhotosphere: Function;
 };
 
@@ -29,6 +31,13 @@ export default function PhotoSphereListItem(props: Props) {
         if (posRegex.test(String(value))) {
             props.updatePhotospherePosition(props.photosphere.id, name, value);
         };
+    };
+
+    const updateGroup = (event: { target: { name: string, value: string } }) => {
+        const groupId = Number(event.target.name);
+        const subGroupId = Number(event.target.value);
+
+        props.updatePhotosphereGroup(props.photosphere.id, groupId, subGroupId);
     };
 
     const removePhotosphere = () => {
@@ -61,6 +70,18 @@ export default function PhotoSphereListItem(props: Props) {
                             <p>Horizontal Position</p>
                             <input type="number" name="leftPos" value={props.photosphere.leftPos} onChange={updatePhotospherePosition} className="w-16 text-center" />
                         </div>
+                    </div>
+                    <div>
+                        {props.groups.map((group) => (
+                            <label>
+                                <span>{group.name}</span>
+                                <select name={String(group.id)} onChange={updateGroup}>
+                                    {group.subGroups.map((subGroup) => (
+                                        <option value={subGroup.id}>{subGroup.name}</option>
+                                    ))}
+                                </select>
+                            </label>
+                        ))}
                     </div>
                     <div>
                         <button onClick={removePhotosphere}>Remove</button>

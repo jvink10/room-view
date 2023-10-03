@@ -136,21 +136,6 @@ export default function RoomPage() {
     };
 
     //Change photosphere data
-    const updatePhotosphere = (newPhotosphere: { id: number; name: string; image: string; topPos: number; leftPos: number; color: string; visible: boolean; groups: Array<{ group: number; subGroup: number }> }) => {
-        const id = newPhotosphere.id;
-        setPhotospheres(prevPhotospheres => {
-            const index = prevPhotospheres.findIndex(photosphere => photosphere.id === id);
-            
-            if (index === -1) {
-                return prevPhotospheres;
-            };
-
-            const updatedPhotospheres = [...prevPhotospheres];
-            updatedPhotospheres[index] = newPhotosphere;
-            return updatedPhotospheres;
-        });
-    };
-
     const updatePhotosphereName = (id: number, name: string) => {
         setPhotospheres(prevPhotospheres => {
             const updatedPhotospheres = [...prevPhotospheres];
@@ -196,6 +181,30 @@ export default function RoomPage() {
             const newPhotosphere = {...updatedPhotosphere, [name]: value};
 
             updatedPhotospheres[photosphereIndex] = newPhotosphere;
+
+            return updatedPhotospheres;
+        });
+    };
+
+    const updatePhotosphereGroup = (photosphereId: number, groupId: number, subGroupId: number) => {
+        setPhotospheres(prevPhotospheres => {
+            const updatedPhotospheres = [...prevPhotospheres];
+
+            const photosphereIndex = updatedPhotospheres.findIndex(photosphere => photosphere.id === photosphereId);
+            
+            const updatedPhotosphere = updatedPhotospheres[photosphereIndex];
+
+            const groupIndex = updatedPhotosphere.groups.findIndex(group => group.group === groupId);
+
+            const updatedGroup = updatedPhotosphere.groups[groupIndex];
+
+            updatedGroup.subGroup = subGroupId;
+
+            updatedPhotosphere.groups[groupIndex] = updatedGroup;
+
+            updatedPhotospheres[photosphereIndex] = updatedPhotosphere;
+
+            updatePhotosphereVisibility();
 
             return updatedPhotospheres;
         });
@@ -475,7 +484,7 @@ export default function RoomPage() {
                 </div>
                 <ul>
                     {photospheres.map((photosphere) => (
-                        <PhotoSphereListItem key={photosphere.id} photosphere={photosphere} updatePhotosphereName={updatePhotosphereName} updatePhotosphereColor={updatePhotosphereColor} updatePhotospherePosition={updatePhotospherePosition} removePhotosphere={removePhotosphere} />
+                        <PhotoSphereListItem key={photosphere.id} photosphere={photosphere} groups={groups} updatePhotosphereName={updatePhotosphereName} updatePhotosphereColor={updatePhotosphereColor} updatePhotospherePosition={updatePhotospherePosition} updatePhotosphereGroup={updatePhotosphereGroup} removePhotosphere={removePhotosphere} />
                     ))}
                 </ul>
             </section>
