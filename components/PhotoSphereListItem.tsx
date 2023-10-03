@@ -73,11 +73,11 @@ export default function PhotoSphereListItem(props: Props) {
                     </div>
                     <div>
                         {props.groups.map((group) => (
-                            <label>
+                            <label key={group.id}>
                                 <span>{group.name}</span>
                                 <select name={String(group.id)} onChange={updateGroup}>
                                     {group.subGroups.map((subGroup) => (
-                                        <option value={subGroup.id}>{subGroup.name}</option>
+                                        <option key={subGroup.id} value={subGroup.id}>{subGroup.name}</option>
                                     ))}
                                 </select>
                             </label>
