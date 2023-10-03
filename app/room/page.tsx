@@ -149,37 +149,27 @@ export default function RoomPage() {
 
     //Toggle photosphere group visibility
     const toggleGroupVisibility = (groupId: number, subGroupId: number) => {
-        const prevVisibility = groups[groupId].subGroups[subGroupId].visible;
-
         setGroups(prevGroups => {
             const updatedGroups = [...prevGroups];
-            const updatedGroup = {...updatedGroups[groupId]};
+
+            const groupIndex = updatedGroups.findIndex(group => group.id === groupId);
+
+            const updatedGroup = {...updatedGroups[groupIndex]};
+
             const updatedSubGroups = [...updatedGroup.subGroups];
+
+            const subGroupIndex = updatedSubGroups.findIndex(subGroup => subGroup.id === subGroupId);
+
+            const prevVisibility = updatedGroups[groupIndex].subGroups[subGroupIndex].visible;
+
             const updatedSubGroup = {
-                ...updatedSubGroups[subGroupId],
+                ...updatedSubGroups[subGroupIndex],
                 visible: !prevVisibility,
             };
 
-            updatedSubGroups[subGroupId] = updatedSubGroup;
+            updatedSubGroups[subGroupIndex] = updatedSubGroup;
             updatedGroup.subGroups = updatedSubGroups;
-            updatedGroups[groupId] = updatedGroup;
-
-            return updatedGroups;
-        });
-    };
-
-    const newSubGroup = (groupId: number) => {
-        const newSubGroupId = groups[groupId].subGroups.reduce((previous, current) => (previous > current.id) ? previous : current.id, -1) + 1;
-
-        setGroups(prevGroups => {
-            const updatedGroups = [...prevGroups];
-            const updatedGroup = updatedGroups[groupId];
-            const updatedSubGroups = updatedGroup.subGroups;
-
-            updatedSubGroups.push({id: newSubGroupId, name: "new sub group", visible: true});
-
-            updatedGroup.subGroups = updatedSubGroups;
-            updatedGroups[groupId] = updatedGroup;
+            updatedGroups[groupIndex] = updatedGroup;
 
             return updatedGroups;
         });
@@ -204,6 +194,82 @@ export default function RoomPage() {
             });
 
             return newPhotospheres;
+        });
+    };
+
+    const removeGroup = (groupId: number) => {
+        setPhotospheres(prevPhotospheres => {
+            const newPhotospheres = [...prevPhotospheres];
+
+            newPhotospheres.forEach(photosphere => {
+                const groupIndex = photosphere.groups.findIndex(currentGroup => currentGroup.group === groupId);
+
+                photosphere.groups.splice(groupIndex, 1);
+            });
+
+            return newPhotospheres;
+        });
+
+        setGroups(prevGroups => {
+            const newGroups = [...prevGroups];
+
+            const groupIndex = newGroups.findIndex(group => group.id === groupId);
+
+            newGroups.splice(groupIndex, 1);
+
+            return newGroups;
+        });
+    };
+
+    const newSubGroup = (groupId: number) => {
+        setGroups(prevGroups => {
+            const groupIndex = groups.findIndex(group => group.id === groupId);
+
+            const newSubGroupId = groups[groupIndex].subGroups.reduce((previous, current) => (previous > current.id) ? previous : current.id, -1) + 1;
+
+            const updatedGroups = [...prevGroups];
+            const updatedGroup = updatedGroups[groupIndex];
+            const updatedSubGroups = updatedGroup.subGroups;
+
+            updatedSubGroups.push({id: newSubGroupId, name: "new sub group", visible: true});
+
+            updatedGroup.subGroups = updatedSubGroups;
+            updatedGroups[groupIndex] = updatedGroup;
+
+            return updatedGroups;
+        });
+    };
+
+    const removeSubGroup = (groupId: number, subGroupId: number) => {
+        const groupIndex = groups.findIndex(group => group.id === groupId);
+        const subGroupIndex = groups[groupIndex].subGroups.findIndex(subGroup => subGroup.id === subGroupId)
+
+        if (groups[groupIndex].subGroups.length <= 1) {
+            return;
+        };
+
+        setPhotospheres(prevPhotospheres => {
+            const newPhotospheres = [...prevPhotospheres];
+
+            newPhotospheres.forEach(photosphere => {
+                const photosphereGroupIndex = photosphere.groups.findIndex(photosphereGroup => photosphereGroup.group === groupId);
+
+                const newSubGroupIndex = groups[groupIndex].subGroups.findIndex(subGroup => subGroup.id !== subGroupId);
+                
+                const newSubGroupId = groups[groupIndex].subGroups[newSubGroupIndex].id;
+
+                photosphere.groups[photosphereGroupIndex].subGroup = newSubGroupId;
+            });
+
+            return newPhotospheres;
+        });
+
+        setGroups(prevGroups => {
+            const newGroups = [...prevGroups];
+            
+            newGroups[groupIndex].subGroups.splice(subGroupIndex, 1);
+
+            return newGroups;
         });
     };
 
@@ -244,7 +310,7 @@ export default function RoomPage() {
                     </label>
                 </div>
                 <div className="border-t border-gray-100 p-8 text-left">
-                    <GroupListItem groups={groups} updateGroupVisibility={toggleGroupVisibility} newSubGroup={newSubGroup} newGroup={newGroup} />
+                    <GroupListItem groups={groups} updateGroupVisibility={toggleGroupVisibility} newGroup={newGroup} removeGroup={removeGroup} newSubGroup={newSubGroup} removeSubGroup={removeSubGroup} />
                 </div>
             </section>
             <section className="relative p-8">
