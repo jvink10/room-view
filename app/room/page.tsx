@@ -8,7 +8,7 @@ import { AiOutlineArrowRight } from 'react-icons/ai';
 
 import { newRoom, exampleRoom } from '../../data/room-data';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
-import GroupListItem from '../../components/GroupListItem';
+import GroupList from '../../components/GroupList';
 import Room from '../../components/Room';
 import PhotoSphereListItem from '../../components/PhotoSphereListItem';
 import Confirm from '../../components/Confirm';
@@ -255,7 +255,7 @@ export default function RoomPage() {
                 const photosphereGroupIndex = photosphere.groups.findIndex(photosphereGroup => photosphereGroup.group === groupId);
 
                 const newSubGroupIndex = groups[groupIndex].subGroups.findIndex(subGroup => subGroup.id !== subGroupId);
-                
+
                 const newSubGroupId = groups[groupIndex].subGroups[newSubGroupIndex].id;
 
                 photosphere.groups[photosphereGroupIndex].subGroup = newSubGroupId;
@@ -310,7 +310,7 @@ export default function RoomPage() {
                     </label>
                 </div>
                 <div className="border-t border-gray-100 p-8 text-left">
-                    <GroupListItem groups={groups} updateGroupVisibility={toggleGroupVisibility} newGroup={newGroup} removeGroup={removeGroup} newSubGroup={newSubGroup} removeSubGroup={removeSubGroup} />
+                    <GroupList groups={groups} updateGroupVisibility={toggleGroupVisibility} newGroup={newGroup} removeGroup={removeGroup} newSubGroup={newSubGroup} removeSubGroup={removeSubGroup} />
                 </div>
             </section>
             <section className="relative p-8">

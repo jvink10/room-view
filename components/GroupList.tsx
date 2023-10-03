@@ -7,7 +7,7 @@ type Props = {
     removeSubGroup: Function;
 };
 
-export default function GroupListItem(props: Props) {
+export default function GroupList(props: Props) {
     const toggleGroupVisibility = (groupId: number, subGroupId: number) => {
         props.updateGroupVisibility(groupId, subGroupId);
     };
