@@ -23,7 +23,10 @@ export default function GroupList(props: Props) {
     };
 
     const updateGroup = (groupId: number, name: string ) => {
-        props.updateGroup(groupId, name);
+        const nameRegex = /^.{0,15}$/;
+        if (nameRegex.test(name)) {
+            props.updateGroup(groupId, name);
+        };
     };
 
     const newSubGroup = (groupId: number) => {
@@ -35,7 +38,10 @@ export default function GroupList(props: Props) {
     };
 
     const updateSubGroup = (groupId: number, subGroupId: number, name: string) => {
-        props.updateSubGroup(groupId, subGroupId, name);
+        const nameRegex = /^.{0,15}$/;
+        if (nameRegex.test(name)) {
+            props.updateSubGroup(groupId, subGroupId, name);
+        };
     };
 
     return (
@@ -43,12 +49,12 @@ export default function GroupList(props: Props) {
             {props.groups.map((group) => (
                 <div key={group.id}>
                     <div className="flex flex-row justify-between group border-y border-white hover:border-gray-100">
-                        <input type="text" value={group.name} onChange={(event) => updateGroup(group.id, event.target.value)} />
+                        <input type="text" value={group.name} onChange={(event) => updateGroup(group.id, event.target.value)} size={10} />
                         <button onClick={() => removeGroup(group.id)} className="hidden group-hover:inline-block">Remove</button>
                     </div>
                     {group.subGroups.map((subGroup) => (
                         <div key={subGroup.id} className="flex flex-row justify-between group border-y border-white hover:border-gray-100">
-                            <input type="text" value={subGroup.name} onChange={(event) => updateSubGroup(group.id, subGroup.id, event.target.value)} className={`${subGroup.visible ? "" : "text-black/25"}`} />
+                            <input type="text" value={subGroup.name} onChange={(event) => updateSubGroup(group.id, subGroup.id, event.target.value)} size={10} className={`${subGroup.visible ? "" : "text-black/25"}`} />
                             <div className="flex flex-row gap-2">
                                 <button onClick={() => toggleGroupVisibility(group.id, subGroup.id)} className="hidden group-hover:inline-block">{subGroup.visible ? "Hide" : "Show"}</button>
                                 <button onClick={() => removeSubGroup(group.id, subGroup.id)} className="hidden group-hover:inline-block">Remove</button>
