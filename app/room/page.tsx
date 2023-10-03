@@ -396,6 +396,29 @@ export default function RoomPage() {
         setIsPinging(pinging);
     };
 
+    //Update color visibility
+    const updateColorVisibility = (event: React.MouseEvent<HTMLButtonElement>) => {
+        const color = event.currentTarget.name;
+
+        setVisibleColors(prevVisibleColors => {
+            const updatedVisibleColors = [...prevVisibleColors];
+
+            const visibleColorIndex = updatedVisibleColors.findIndex(visibleColor => visibleColor.color === color);
+
+            const updatedVisibleColor = updatedVisibleColors[visibleColorIndex];
+
+            const updatedVisibility = !updatedVisibleColor.visible;
+
+            updatedVisibleColor.visible = updatedVisibility;
+
+            updatedVisibleColors[visibleColorIndex] = updatedVisibleColor;
+
+            updatePhotosphereVisibility();
+
+            return updatedVisibleColors;
+        });
+    };
+
     return (
         <main className="flex flex-row justify-center">
             <section className={`${isTabVisible.roomTab ? "" : "hidden"} border-r border-gray-100 w-96 max-w-1/3 text-center bg-white`}>
@@ -410,13 +433,19 @@ export default function RoomPage() {
                         <AiOutlinePlus className="inline" />
                     </button>
                 </div>
-                <div className="border-t border-gray-100 py-8 px-4">
+                <div className="border-t border-gray-100 py-8 px-4 space-y-4">
                     <label className="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" checked={isPinging} onChange={handlePinging} className="sr-only" />
                         <div className={`relative border-2 rounded-full border-photosphere-gray h-4 w-4 -top-0.5 -left-0.5 bg-white`}></div>
                         <div className={`${isPinging ? "" : "hidden"} absolute rounded-full h-4 w-4 -top-px -left-0.5 bg-photosphere-gray animate-ping`}></div>
                         <span className="ml-3 text-sm font-medium">Photosphere Pinging</span>
                     </label>
+                    <div className="flex flex-row justify-around">
+                        <button name="gray" onClick={updateColorVisibility} className={`rounded-full h-4 w-4 bg-photosphere-gray ${visibleColors[0].visible ? "" : "opacity-25"}`}></button>
+                        <button name="green" onClick={updateColorVisibility} className={`rounded-full h-4 w-4 bg-photosphere-green ${visibleColors[1].visible ? "" : "opacity-25"}`}></button>
+                        <button name="blue" onClick={updateColorVisibility} className={`rounded-full h-4 w-4 bg-photosphere-blue ${visibleColors[2].visible ? "" : "opacity-25"}`}></button>
+                        <button name="yellow" onClick={updateColorVisibility} className={`rounded-full h-4 w-4 bg-photosphere-yellow ${visibleColors[3].visible ? "" : "opacity-25"}`}></button>
+                    </div>
                 </div>
                 <div className="border-t border-gray-100 p-8 text-left">
                     <GroupList groups={groups} updateGroupVisibility={toggleGroupVisibility} newGroup={newGroup} removeGroup={removeGroup} updateGroup={updateGroup} newSubGroup={newSubGroup} removeSubGroup={removeSubGroup} updateSubGroup={updateSubGroup} />
