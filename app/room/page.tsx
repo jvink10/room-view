@@ -19,19 +19,42 @@ export default function RoomPage() {
     const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; color: string; visible: boolean; groups: Array<{ group: number; subGroup: number }> }>>([]);
     const [groups, setGroups] = useState<Array<{ id: number; name: string; subGroups: Array<{ id: number; name: string; visible: boolean }> }>>(newRoom.groups);
 
-    //Setting photosphere visibility
-    useEffect(() => {
+    //Setting initial Room settings
+    const [isTabVisible, setIsTabVisible] = useState<{ roomTab: boolean; photosphereTab: boolean }>({roomTab: true, photosphereTab: true});
+    const [isPinging, setIsPinging] = useState<boolean>(true);
+    const [visibleColors, setVisibleColors] = useState<Array<{ color: string; visible: boolean }>>([{color: "gray", visible: true}, {color: "green", visible: true}, {color: "blue", visible: true}, {color: "yellow", visible: true}]);
+
+    const updatePhotosphereVisibility = () => {
         setPhotospheres(prevPhotospheres => {
             const newPhotospheres = [...prevPhotospheres];
 
             newPhotospheres.forEach(photosphere => {
                 if (photosphere.groups.every(photosphereGroup => {
-                    const group = groups.find(group => group.id === photosphereGroup.group);
-                    const subGroup = group?.subGroups.find(subGroup => subGroup.id === photosphereGroup.subGroup);
-                    const visible = subGroup?.visible === true;
+                    const groupIndex = groups.findIndex(group => group.id === photosphereGroup.group);
+
+                    const group = groups[groupIndex];
+
+                    const subGroups = group.subGroups;
+
+                    const subGroupIndex = subGroups.findIndex(subGroup => subGroup.id === photosphereGroup.subGroup);
+
+                    const subGroup = subGroups[subGroupIndex];
+
+                    const visible = subGroup.visible === true;
+
                     return visible;
                 })) {
-                    photosphere.visible = true;
+                    const color = photosphere.color;
+
+                    const colorIndex = visibleColors.findIndex(visibleColor => visibleColor.color === color);
+
+                    const visibleColor = visibleColors[colorIndex];
+
+                    if (visibleColor.visible) {
+                        photosphere.visible = true;
+                    } else {
+                        photosphere.visible = false;
+                    };                    
                 } else {
                     photosphere.visible = false;
                 };
@@ -39,6 +62,11 @@ export default function RoomPage() {
 
             return newPhotospheres;
         });
+    };
+
+    //Setting photosphere visibility
+    useEffect(() => {
+        updatePhotosphereVisibility();
     }, [groups]);
 
     //Checking search parameters
@@ -55,10 +83,6 @@ export default function RoomPage() {
             setGroups(newRoom.groups);
         };
     }, []);
-
-    //Setting initial Room settings
-    const [isTabVisible, setIsTabVisible] = useState<{ roomTab: boolean; photosphereTab: boolean }>({roomTab: true, photosphereTab: true});
-    const [isPinging, setIsPinging] = useState<boolean>(true);
 
     const { screenHeight, screenWidth } = useWindowDimensions();
     useEffect(() => {
@@ -123,6 +147,56 @@ export default function RoomPage() {
 
             const updatedPhotospheres = [...prevPhotospheres];
             updatedPhotospheres[index] = newPhotosphere;
+            return updatedPhotospheres;
+        });
+    };
+
+    const updatePhotosphereName = (id: number, name: string) => {
+        setPhotospheres(prevPhotospheres => {
+            const updatedPhotospheres = [...prevPhotospheres];
+
+            const photosphereIndex = updatedPhotospheres.findIndex(photosphere => photosphere.id === id);
+            
+            const updatedPhotosphere = updatedPhotospheres[photosphereIndex];
+
+            updatedPhotosphere.name = name
+
+            updatedPhotospheres[photosphereIndex] = updatedPhotosphere;
+
+            return updatedPhotospheres;
+        });
+    };
+
+    const updatePhotosphereColor = (id: number, color: string) => {
+        setPhotospheres(prevPhotospheres => {
+            const updatedPhotospheres = [...prevPhotospheres];
+
+            const photosphereIndex = updatedPhotospheres.findIndex(photosphere => photosphere.id === id);
+
+            const updatedPhotosphere = updatedPhotospheres[photosphereIndex];
+
+            updatedPhotosphere.color = color;
+
+            updatedPhotospheres[photosphereIndex] = updatedPhotosphere;
+
+            return updatedPhotospheres;
+        });
+
+        updatePhotosphereVisibility();
+    };
+
+    const updatePhotospherePosition = (id: number, name: string, value: number) => {
+        setPhotospheres(prevPhotospheres => {
+            const updatedPhotospheres = [...prevPhotospheres];
+
+            const photosphereIndex = updatedPhotospheres.findIndex(photosphere => photosphere.id === id);
+
+            const updatedPhotosphere = updatedPhotospheres[photosphereIndex];
+
+            const newPhotosphere = {...updatedPhotosphere, [name]: value};
+
+            updatedPhotospheres[photosphereIndex] = newPhotosphere;
+
             return updatedPhotospheres;
         });
     };
@@ -372,7 +446,7 @@ export default function RoomPage() {
                 </div>
                 <ul>
                     {photospheres.map((photosphere) => (
-                        <PhotoSphereListItem key={photosphere.id} photosphere={photosphere} updatePhotosphere={updatePhotosphere} removePhotosphere={removePhotosphere} />
+                        <PhotoSphereListItem key={photosphere.id} photosphere={photosphere} updatePhotosphereName={updatePhotosphereName} updatePhotosphereColor={updatePhotosphereColor} updatePhotospherePosition={updatePhotospherePosition} removePhotosphere={removePhotosphere} />
                     ))}
                 </ul>
             </section>
