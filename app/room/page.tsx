@@ -26,9 +26,9 @@ export default function RoomPage() {
 
     const updatePhotosphereVisibility = () => {
         setPhotospheres(prevPhotospheres => {
-            const newPhotospheres = [...prevPhotospheres];
+            const updatedPhotospheres = [...prevPhotospheres];
 
-            newPhotospheres.forEach(photosphere => {
+            updatedPhotospheres.forEach(photosphere => {
                 if (photosphere.groups.every(photosphereGroup => {
                     const groupIndex = groups.findIndex(group => group.id === photosphereGroup.group);
 
@@ -60,7 +60,7 @@ export default function RoomPage() {
                 };
             });
 
-            return newPhotospheres;
+            return updatedPhotospheres;
         });
     };
 
@@ -270,49 +270,49 @@ export default function RoomPage() {
         });
         
         setPhotospheres(prevPhotospheres => {
-            const newPhotospheres = [...prevPhotospheres];
+            const updatedPhotospheres = [...prevPhotospheres];
 
-            newPhotospheres.forEach(photosphere => {
+            updatedPhotospheres.forEach(photosphere => {
                 photosphere.groups.push({group: newGroupId, subGroup: 0});
             });
 
-            return newPhotospheres;
+            return updatedPhotospheres;
         });
     };
 
     const removeGroup = (groupId: number) => {
         setPhotospheres(prevPhotospheres => {
-            const newPhotospheres = [...prevPhotospheres];
+            const updatedPhotospheres = [...prevPhotospheres];
 
-            newPhotospheres.forEach(photosphere => {
-                const groupIndex = photosphere.groups.findIndex(currentGroup => currentGroup.group === groupId);
+            updatedPhotospheres.forEach(photosphere => {
+                const groupIndex = photosphere.groups.findIndex(photosphereGroup => photosphereGroup.group === groupId);
 
                 photosphere.groups.splice(groupIndex, 1);
             });
 
-            return newPhotospheres;
+            return updatedPhotospheres;
         });
 
         setGroups(prevGroups => {
-            const newGroups = [...prevGroups];
+            const updatedGroups = [...prevGroups];
 
-            const groupIndex = newGroups.findIndex(group => group.id === groupId);
+            const groupIndex = updatedGroups.findIndex(group => group.id === groupId);
 
-            newGroups.splice(groupIndex, 1);
+            updatedGroups.splice(groupIndex, 1);
 
-            return newGroups;
+            return updatedGroups;
         });
     };
 
     const updateGroup = (groupId: number, name: string) => {
         setGroups(prevGroups => {
-            const newGroups = [...prevGroups];
+            const updatedGroups = [...prevGroups];
 
-            const groupIndex = newGroups.findIndex(group => group.id === groupId);
+            const groupIndex = updatedGroups.findIndex(group => group.id === groupId);
 
-            newGroups[groupIndex].name = name;
+            updatedGroups[groupIndex].name = name;
 
-            return newGroups;
+            return updatedGroups;
         });
     };
 
@@ -344,9 +344,9 @@ export default function RoomPage() {
         };
 
         setPhotospheres(prevPhotospheres => {
-            const newPhotospheres = [...prevPhotospheres];
+            const updatedPhotospheres = [...prevPhotospheres];
 
-            newPhotospheres.forEach(photosphere => {
+            updatedPhotospheres.forEach(photosphere => {
                 const photosphereGroupIndex = photosphere.groups.findIndex(photosphereGroup => photosphereGroup.group === groupId);
 
                 const newSubGroupIndex = groups[groupIndex].subGroups.findIndex(subGroup => subGroup.id !== subGroupId);
@@ -356,15 +356,15 @@ export default function RoomPage() {
                 photosphere.groups[photosphereGroupIndex].subGroup = newSubGroupId;
             });
 
-            return newPhotospheres;
+            return updatedPhotospheres;
         });
 
         setGroups(prevGroups => {
-            const newGroups = [...prevGroups];
+            const updatedGroups = [...prevGroups];
             
-            newGroups[groupIndex].subGroups.splice(subGroupIndex, 1);
+            updatedGroups[groupIndex].subGroups.splice(subGroupIndex, 1);
 
-            return newGroups;
+            return updatedGroups;
         });
     };
 
