@@ -1,10 +1,7 @@
 type Props = {
     photosphere: { id: number; name: string; image: string; topPos: number; leftPos: number; color: string; visible: boolean; groups: Array<{ group: number; subGroup: number }> };
     groups: Array<{ id: number; name: string; subGroups: Array<{ id: number; name: string; visible: boolean }> }>;
-    updatePhotosphereName: Function;
-    updatePhotosphereColor: Function;
-    updatePhotospherePosition: Function;
-    updatePhotosphereGroup: Function;
+    updatePhotosphere: Function;
     removePhotosphere: Function;
 };
 
@@ -14,14 +11,14 @@ export default function PhotoSphereListItem(props: Props) {
 
         const nameRegex = /^.{0,25}$/;
         if (nameRegex.test(name)) {
-            props.updatePhotosphereName(props.photosphere.id, name);
+            props.updatePhotosphere(props.photosphere.id, "name", name, false);
         };
     };
 
     const updatePhotosphereColor = (event: React.MouseEvent<HTMLButtonElement>) => {
         const color = event.currentTarget.name;
 
-        props.updatePhotosphereColor(props.photosphere.id, color);
+        props.updatePhotosphere(props.photosphere.id, "color", color, true);
     };
 
     const updatePhotospherePosition = (event: { target: { name: string; value: number | string } } ) => {
@@ -29,7 +26,7 @@ export default function PhotoSphereListItem(props: Props) {
 
         const posRegex = /^(100|\d{0,2})$/;
         if (posRegex.test(String(value))) {
-            props.updatePhotospherePosition(props.photosphere.id, name, value);
+            props.updatePhotosphere(props.photosphere.id, name, value, false);
         };
     };
 
@@ -37,7 +34,16 @@ export default function PhotoSphereListItem(props: Props) {
         const groupId = Number(event.target.name);
         const subGroupId = Number(event.target.value);
 
-        props.updatePhotosphereGroup(props.photosphere.id, groupId, subGroupId);
+        const updatedGroups = [...props.photosphere.groups];
+
+        const groupIndex = updatedGroups.findIndex(group => group.group == groupId);
+
+        const updatedGroup = {...updatedGroups[groupIndex]};
+
+        updatedGroup.subGroup = subGroupId;
+        updatedGroups[groupIndex] = updatedGroup;
+        
+        props.updatePhotosphere(props.photosphere.id, "groups", updatedGroups, true);
     };
 
     const removePhotosphere = () => {
