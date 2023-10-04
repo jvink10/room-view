@@ -72,8 +72,9 @@ export default function RoomPage() {
     //Checking search parameters
     const searchParams = useSearchParams();
     useEffect(() => {
-        const searchParamsName = searchParams.get("name");
-        if (searchParamsName === "Example Room") {
+        const searchParamsId = searchParams.get("id");
+
+        if (searchParamsId === "1") {
             setBackground(exampleRoom.background);
             setPhotospheres(exampleRoom.photospheres);
             setGroups(exampleRoom.groups);
