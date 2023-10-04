@@ -10,7 +10,7 @@ import { newRoom, exampleRoom } from '../../data/room-data';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import GroupList from '../../components/GroupList';
 import Room from '../../components/Room';
-import PhotoSphereListItem from '../../components/PhotoSphereListItem';
+import PhotosphereList from '../../components/PhotosphereList';
 import Confirm from '../../components/Confirm';
 
 export default function RoomPage() {
@@ -427,11 +427,9 @@ export default function RoomPage() {
                         <AiOutlinePlus className="inline" />
                     </button>
                 </div>
-                <ul>
-                    {photospheres.map((photosphere) => (
-                        <PhotoSphereListItem key={photosphere.id} photosphere={photosphere} groups={groups} updatePhotosphere={updatePhotosphere} removePhotosphere={removePhotosphere} />
-                    ))}
-                </ul>
+                <div>
+                    <PhotosphereList photospheres={photospheres} groups={groups} updatePhotosphere={updatePhotosphere} removePhotosphere={removePhotosphere} />
+                </div>
             </section>
             <div className={`${photosphereToRemove ? "" : "hidden"}`}>
                 <Confirm confirmFunction={confirmRemovePhotosphere} denyFunction={denyRemovePhotosphere} confirmText="Are you sure you want to delete this photosphere?" confirmName={photosphereToRemove?.name} />
