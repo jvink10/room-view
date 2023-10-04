@@ -268,8 +268,8 @@ export default function RoomPage() {
             const newSubGroupId = groups[groupIndex].subGroups.reduce((previous, current) => (previous > current.id) ? previous : current.id, -1) + 1;
 
             const updatedGroups = [...prevGroups];
-            const updatedGroup = updatedGroups[groupIndex];
-            const updatedSubGroups = updatedGroup.subGroups;
+            const updatedGroup = {...updatedGroups[groupIndex]};
+            const updatedSubGroups = [...updatedGroup.subGroups];
 
             updatedSubGroups.push({id: newSubGroupId, name: "new sub group", visible: true});
 
@@ -319,12 +319,12 @@ export default function RoomPage() {
 
             const groupIndex = updatedGroups.findIndex(group => group.id === groupId);
 
-            const updatedGroup = updatedGroups[groupIndex];
-            const updatedSubGroups = updatedGroup.subGroups;
+            const updatedGroup = {...updatedGroups[groupIndex]};
+            const updatedSubGroups = [...updatedGroup.subGroups];
 
             const subGroupIndex = updatedSubGroups.findIndex(subGroup => subGroup.id === subGroupId);
 
-            const updatedSubGroup = updatedSubGroups[subGroupIndex];
+            const updatedSubGroup = {...updatedSubGroups[subGroupIndex]};
 
             updatedSubGroup.name = name;
 
@@ -359,7 +359,7 @@ export default function RoomPage() {
 
             const visibleColorIndex = updatedVisibleColors.findIndex(visibleColor => visibleColor.color === color);
 
-            const updatedVisibleColor = updatedVisibleColors[visibleColorIndex];
+            const updatedVisibleColor = {...updatedVisibleColors[visibleColorIndex]};
 
             const updatedVisibility = !updatedVisibleColor.visible;
 
