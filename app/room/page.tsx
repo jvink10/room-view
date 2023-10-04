@@ -67,7 +67,7 @@ export default function RoomPage() {
     //Setting photosphere visibility
     useEffect(() => {
         updatePhotosphereVisibility();
-    }, [groups]);
+    }, [groups, visibleColors]);
 
     //Checking search parameters
     const searchParams = useSearchParams();
@@ -367,8 +367,6 @@ export default function RoomPage() {
             updatedVisibleColor.visible = updatedVisibility;
 
             updatedVisibleColors[visibleColorIndex] = updatedVisibleColor;
-
-            updatePhotosphereVisibility();
 
             return updatedVisibleColors;
         });
