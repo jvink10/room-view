@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import PhotoSphere from '../components/PhotoSphere';
+import PhotoSphere from './PhotoSphere';
 
 type Props = {
     background: { id: number; name: string; image: string; height: number; width: number };

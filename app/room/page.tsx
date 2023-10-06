@@ -7,12 +7,12 @@ import { AiOutlineArrowRight } from 'react-icons/ai';
 
 import { newRoom, exampleRoom } from '../../data/room-data';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
-import BackgroundInput from '../../components/BackgroundInput';
-import RoomSettings from '../../components/RoomSettings';
-import GroupList from '../../components/GroupList';
-import Room from '../../components/Room';
-import PhotosphereInput from '../../components/PhotosphereInput';
-import PhotosphereList from '../../components/PhotosphereList';
+import BackgroundInput from '../../components/room/BackgroundInput';
+import RoomSettings from '../../components/room/RoomSettings';
+import GroupList from '../../components/room/GroupList';
+import Room from '../../components/room/Room';
+import PhotosphereInput from '../../components/room/PhotosphereInput';
+import PhotosphereList from '../../components/room/PhotosphereList';
 import Confirm from '../../components/Confirm';
 
 export default function RoomPage() {

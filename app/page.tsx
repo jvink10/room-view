@@ -1,4 +1,4 @@
-import Room from '../components/Room';
+import Room from '../components/room/Room';
 import { exampleRoom } from '../data/room-data';
 
 export default function Home() {

@@ -1,4 +1,4 @@
-import PhotoSphere from '../../components/PhotoSphere';
+import PhotoSphere from '../../components/room/PhotoSphere';
 
 export default function PhotoSpherePage() {
     return (
