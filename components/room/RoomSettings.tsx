@@ -25,10 +25,10 @@ export default function RoomSettings(props: Props) {
                 <span className="ml-3 text-sm font-medium">Photosphere Pinging</span>
             </label>
             <div className="flex flex-row justify-around">
-                <button name="gray" onClick={updateColorVisibility} className={`rounded-full h-4 w-4 bg-photosphere-gray ${props.visibleColors[0].visible ? "" : "opacity-25"}`}></button>
-                <button name="green" onClick={updateColorVisibility} className={`rounded-full h-4 w-4 bg-photosphere-green ${props.visibleColors[1].visible ? "" : "opacity-25"}`}></button>
-                <button name="blue" onClick={updateColorVisibility} className={`rounded-full h-4 w-4 bg-photosphere-blue ${props.visibleColors[2].visible ? "" : "opacity-25"}`}></button>
-                <button name="yellow" onClick={updateColorVisibility} className={`rounded-full h-4 w-4 bg-photosphere-yellow ${props.visibleColors[3].visible ? "" : "opacity-25"}`}></button>
+                <button name="gray" onClick={updateColorVisibility} className={`rounded-full h-4 w-4 bg-photosphere-gray ${props.visibleColors[0].visible ? "" : "opacity-50"}`}></button>
+                <button name="green" onClick={updateColorVisibility} className={`rounded-full h-4 w-4 bg-photosphere-green ${props.visibleColors[1].visible ? "" : "opacity-50"}`}></button>
+                <button name="blue" onClick={updateColorVisibility} className={`rounded-full h-4 w-4 bg-photosphere-blue ${props.visibleColors[2].visible ? "" : "opacity-50"}`}></button>
+                <button name="yellow" onClick={updateColorVisibility} className={`rounded-full h-4 w-4 bg-photosphere-yellow ${props.visibleColors[3].visible ? "" : "opacity-50"}`}></button>
             </div>
         </div>
     );
