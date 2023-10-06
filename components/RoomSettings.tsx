@@ -17,7 +17,7 @@ export default function RoomSettings(props: Props) {
     };
 
     return (
-        <div className="border-t border-gray-100 py-8 px-4 space-y-4">
+        <div className="space-y-4">
             <label className="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" checked={props.isPinging} onChange={updatePinging} className="sr-only" />
                 <div className={`relative border-2 rounded-full border-photosphere-gray h-4 w-4 -top-0.5 -left-0.5 bg-white`}></div>

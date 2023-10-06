@@ -384,7 +384,7 @@ export default function RoomPage() {
                         <AiOutlinePlus className="inline" />
                     </button>
                 </div>
-                <div>
+                <div className="border-t border-gray-100 py-8 px-4">
                     <RoomSettings isPinging={isPinging} visibleColors={visibleColors} updatePinging={updatePinging} updateColorVisibility={updateColorVisibility} />
                 </div>
                 <div className="border-t border-gray-100 p-8 text-left">
