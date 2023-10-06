@@ -2,14 +2,11 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 
 import { newRoom, exampleRoom } from '../../data/room-data';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
-import BackgroundInput from '../../components/room/BackgroundInput';
-import RoomSettings from '../../components/room/RoomSettings';
-import GroupList from '../../components/room/GroupList';
+import RoomTab from '../../components/room/RoomTab';
 import Room from '../../components/room/Room';
 import PhotosphereInput from '../../components/room/PhotosphereInput';
 import PhotosphereList from '../../components/room/PhotosphereList';
@@ -128,7 +125,7 @@ export default function RoomPage() {
     };
 
     //Toggle photosphere group visibility
-    const toggleGroupVisibility = (groupId: number, subGroupId: number) => {
+    const updateGroupVisibility = (groupId: number, subGroupId: number) => {
         setGroups(prevGroups => {
             const updatedGroups = [...prevGroups];
 
@@ -358,19 +355,7 @@ export default function RoomPage() {
     return (
         <main className="flex flex-row justify-center">
             <section className={`${isTabVisible.roomTab ? "" : "hidden"} border-r border-gray-100 w-96 max-w-1/3 text-center bg-white`}>
-                <Link href="/create" className="block m-2 border-2 rounded-full border-gray-200 py-1 px-4 w-fit">
-                    <span><AiOutlineArrowLeft className="inline" /> Back To Create</span>
-                </Link>
-                <h2 className="pb-2 px-4 text-xl text-left">Background</h2>
-                <div className="border-t border-gray-100 p-4">
-                    <BackgroundInput updateBackgroundFile={updateBackgroundFile} />
-                </div>
-                <div className="border-t border-gray-100 py-8 px-4">
-                    <RoomSettings isPinging={isPinging} visibleColors={visibleColors} updatePinging={updatePinging} updateColorVisibility={updateColorVisibility} />
-                </div>
-                <div className="border-t border-gray-100 p-8 text-left">
-                    <GroupList groups={groups} updateGroupVisibility={toggleGroupVisibility} newGroup={newGroup} removeGroup={removeGroup} updateGroup={updateGroup} newSubGroup={newSubGroup} removeSubGroup={removeSubGroup} updateSubGroup={updateSubGroup} />
-                </div>
+                <RoomTab updateBackgroundFile={updateBackgroundFile} isPinging={isPinging} visibleColors={visibleColors} updatePinging={updatePinging} updateColorVisibility={updateColorVisibility} groups={groups} updateGroupVisibility={updateGroupVisibility} newGroup={newGroup} removeGroup={removeGroup} updateGroup={updateGroup} newSubGroup={newSubGroup} removeSubGroup={removeSubGroup} updateSubGroup={updateSubGroup} />
             </section>
             <section className="relative p-8">
                 <Room
