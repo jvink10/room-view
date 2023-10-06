@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
@@ -103,63 +103,28 @@ export default function RoomPage() {
         }));
     };
 
-    //Add a new photosphere
-    const updatePhotosphereFile = (image: string) => {
-        const id = photospheres.reduce((previous, current) => (previous > current.id) ? previous : current.id, -1) + 1;
-        const newGroups: Array<{ group: number; subGroup: number }> = [];
-        groups.forEach(group => {
-            newGroups.push({group: 0, subGroup: 0});
-        });
-
-        const newPhotosphere = {id: id, name: "New Photosphere", image: image, topPos: 50, leftPos: 50, color: "gray", visible: true, groups: newGroups };
-
-        setPhotospheres(prevPhotospheres => {
-            const newPhotospheres = [...prevPhotospheres];
-
-            newPhotospheres.push(newPhotosphere);
-
-            return newPhotospheres;
-        });
+    //Change pinging state
+    const updatePinging = (pinging: boolean) => {
+        setIsPinging(pinging);
     };
 
-    //Change photosphere data
-    const updatePhotosphere = (id: number, property: string, value: string | number | Array<{ group: number; subGroup: number }>, updateVisibility: boolean) => {
-        setPhotospheres(prevPhotospheres => {
-            const updatedPhotospheres = [...prevPhotospheres];
+    //Update color visibility
+    const updateColorVisibility = (color: string) => {
+        setVisibleColors(prevVisibleColors => {
+            const updatedVisibleColors = [...prevVisibleColors];
 
-            const photosphereIndex = updatedPhotospheres.findIndex(photosphere => photosphere.id === id);
+            const visibleColorIndex = updatedVisibleColors.findIndex(visibleColor => visibleColor.color === color);
 
-            const updatedPhotosphere = {...updatedPhotospheres[photosphereIndex]};
+            const updatedVisibleColor = {...updatedVisibleColors[visibleColorIndex]};
 
-            (updatedPhotosphere as any)[property] = value;
-            updatedPhotospheres[photosphereIndex] = updatedPhotosphere;
+            const updatedVisibility = !updatedVisibleColor.visible;
 
-            if (updateVisibility) {
-                updatePhotosphereVisibility();
-            };
+            updatedVisibleColor.visible = updatedVisibility;
 
-            return updatedPhotospheres;
+            updatedVisibleColors[visibleColorIndex] = updatedVisibleColor;
+
+            return updatedVisibleColors;
         });
-    };
-
-    //Delete a photosphere
-    const [photosphereToRemove, setPhotosphereToRemove] = useState<{id: Number; name: string} | undefined>();
-
-    const removePhotosphere = (id: number, name: string) => {
-        setPhotosphereToRemove({id: id, name: name});
-    };
-
-    const confirmRemovePhotosphere = () => {
-        const id = photosphereToRemove?.id;
-        setPhotospheres(prevPhotospheres => {
-            const updatedPhotospheres = prevPhotospheres.filter(photosphere => photosphere.id !== id);
-            return updatedPhotospheres;
-        });
-        setPhotosphereToRemove(undefined);
-    };
-
-    const denyRemovePhotosphere = () => {
-        setPhotosphereToRemove(undefined);
     };
 
     //Toggle photosphere group visibility
@@ -331,28 +296,63 @@ export default function RoomPage() {
         });
     };
 
-    //Change pinging state
-    const updatePinging = (pinging: boolean) => {
-        setIsPinging(pinging);
+    //Add a new photosphere
+    const updatePhotosphereFile = (image: string) => {
+        const id = photospheres.reduce((previous, current) => (previous > current.id) ? previous : current.id, -1) + 1;
+        const newGroups: Array<{ group: number; subGroup: number }> = [];
+        groups.forEach(group => {
+            newGroups.push({group: 0, subGroup: 0});
+        });
+
+        const newPhotosphere = {id: id, name: "New Photosphere", image: image, topPos: 50, leftPos: 50, color: "gray", visible: true, groups: newGroups };
+
+        setPhotospheres(prevPhotospheres => {
+            const newPhotospheres = [...prevPhotospheres];
+
+            newPhotospheres.push(newPhotosphere);
+
+            return newPhotospheres;
+        });
     };
 
-    //Update color visibility
-    const updateColorVisibility = (color: string) => {
-        setVisibleColors(prevVisibleColors => {
-            const updatedVisibleColors = [...prevVisibleColors];
+    //Change photosphere data
+    const updatePhotosphere = (id: number, property: string, value: string | number | Array<{ group: number; subGroup: number }>, updateVisibility: boolean) => {
+        setPhotospheres(prevPhotospheres => {
+            const updatedPhotospheres = [...prevPhotospheres];
 
-            const visibleColorIndex = updatedVisibleColors.findIndex(visibleColor => visibleColor.color === color);
+            const photosphereIndex = updatedPhotospheres.findIndex(photosphere => photosphere.id === id);
 
-            const updatedVisibleColor = {...updatedVisibleColors[visibleColorIndex]};
+            const updatedPhotosphere = {...updatedPhotospheres[photosphereIndex]};
 
-            const updatedVisibility = !updatedVisibleColor.visible;
+            (updatedPhotosphere as any)[property] = value;
+            updatedPhotospheres[photosphereIndex] = updatedPhotosphere;
 
-            updatedVisibleColor.visible = updatedVisibility;
+            if (updateVisibility) {
+                updatePhotosphereVisibility();
+            };
 
-            updatedVisibleColors[visibleColorIndex] = updatedVisibleColor;
-
-            return updatedVisibleColors;
+            return updatedPhotospheres;
         });
+    };
+
+    //Delete a photosphere
+    const [photosphereToRemove, setPhotosphereToRemove] = useState<{id: Number; name: string} | undefined>();
+
+    const removePhotosphere = (id: number, name: string) => {
+        setPhotosphereToRemove({id: id, name: name});
+    };
+
+    const confirmRemovePhotosphere = () => {
+        const id = photosphereToRemove?.id;
+        setPhotospheres(prevPhotospheres => {
+            const updatedPhotospheres = prevPhotospheres.filter(photosphere => photosphere.id !== id);
+            return updatedPhotospheres;
+        });
+        setPhotosphereToRemove(undefined);
+    };
+
+    const denyRemovePhotosphere = () => {
+        setPhotosphereToRemove(undefined);
     };
 
     return (
