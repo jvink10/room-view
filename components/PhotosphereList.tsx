@@ -58,8 +58,8 @@ export default function PhotosphereList(props: Props) {
         <ul>
             {props.photospheres.map((photosphere) => (
                 <li key={photosphere.id} className={`${photosphere.visible ? "" : "hidden"} group border-t border-gray-100 py-2 px-4`}>
-                    <div className="space-y-1">
-                        <div className="flex flex-row justify-center gap-2">
+                    <div>
+                        <div className="flex flex-row justify-center gap-2 pb-2">
                             <input type="text" value={photosphere.name} onChange={(event) => updatePhotosphereName(photosphere.id, event)} className="text-center" />
                             <div className="relative group/color my-auto">
                                 <div className={`border-2 rounded-full border-white h-4 w-4 bg-photosphere-${photosphere.color}`}></div>
@@ -71,7 +71,7 @@ export default function PhotosphereList(props: Props) {
                                 </div>
                             </div>
                         </div>
-                        <div className="hidden group-hover:block text-center">
+                        <div className="hidden group-hover:block text-center space-y-2">
                             <div className="flex flex-col lg:flex-row justify-evenly">
                                 <div className="basis-1/2">
                                     <p>Vertical Position</p>
@@ -82,10 +82,10 @@ export default function PhotosphereList(props: Props) {
                                     <input type="number" name="leftPos" value={photosphere.leftPos} onChange={(event) => updatePhotospherePosition(photosphere.id, event)} className="w-16 text-center" />
                                 </div>
                             </div>
-                            <div>
+                            <div className="flex flex-col gap-1">
                                 {props.groups.map((group) => (
                                     <label key={group.id}>
-                                        <span>{group.name}</span>
+                                        <span>{group.name} </span>
                                         <select name={String(group.id)} onChange={(event) => updateGroup(photosphere.id, event)}>
                                             {group.subGroups.map((subGroup) => (
                                                 <option key={subGroup.id} value={subGroup.id}>{subGroup.name}</option>

@@ -8,6 +8,7 @@ import { AiOutlineArrowRight } from 'react-icons/ai';
 
 import { newRoom, exampleRoom } from '../../data/room-data';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
+import RoomSettings from '../../components/RoomSettings';
 import GroupList from '../../components/GroupList';
 import Room from '../../components/Room';
 import PhotosphereList from '../../components/PhotosphereList';
@@ -346,15 +347,12 @@ export default function RoomPage() {
     };
 
     //Change pinging state
-    const handlePinging = (event: { target: { checked: boolean; }; }) => {
-        const pinging = event.target.checked;
+    const updatePinging = (pinging: boolean) => {
         setIsPinging(pinging);
     };
 
     //Update color visibility
-    const updateColorVisibility = (event: React.MouseEvent<HTMLButtonElement>) => {
-        const color = event.currentTarget.name;
-
+    const updateColorVisibility = (color: string) => {
         setVisibleColors(prevVisibleColors => {
             const updatedVisibleColors = [...prevVisibleColors];
 
@@ -386,19 +384,8 @@ export default function RoomPage() {
                         <AiOutlinePlus className="inline" />
                     </button>
                 </div>
-                <div className="border-t border-gray-100 py-8 px-4 space-y-4">
-                    <label className="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" checked={isPinging} onChange={handlePinging} className="sr-only" />
-                        <div className={`relative border-2 rounded-full border-photosphere-gray h-4 w-4 -top-0.5 -left-0.5 bg-white`}></div>
-                        <div className={`${isPinging ? "" : "hidden"} absolute rounded-full h-4 w-4 -top-px -left-0.5 bg-photosphere-gray animate-ping`}></div>
-                        <span className="ml-3 text-sm font-medium">Photosphere Pinging</span>
-                    </label>
-                    <div className="flex flex-row justify-around">
-                        <button name="gray" onClick={updateColorVisibility} className={`rounded-full h-4 w-4 bg-photosphere-gray ${visibleColors[0].visible ? "" : "opacity-25"}`}></button>
-                        <button name="green" onClick={updateColorVisibility} className={`rounded-full h-4 w-4 bg-photosphere-green ${visibleColors[1].visible ? "" : "opacity-25"}`}></button>
-                        <button name="blue" onClick={updateColorVisibility} className={`rounded-full h-4 w-4 bg-photosphere-blue ${visibleColors[2].visible ? "" : "opacity-25"}`}></button>
-                        <button name="yellow" onClick={updateColorVisibility} className={`rounded-full h-4 w-4 bg-photosphere-yellow ${visibleColors[3].visible ? "" : "opacity-25"}`}></button>
-                    </div>
+                <div>
+                    <RoomSettings isPinging={isPinging} visibleColors={visibleColors} updatePinging={updatePinging} updateColorVisibility={updateColorVisibility} />
                 </div>
                 <div className="border-t border-gray-100 p-8 text-left">
                     <GroupList groups={groups} updateGroupVisibility={toggleGroupVisibility} newGroup={newGroup} removeGroup={removeGroup} updateGroup={updateGroup} newSubGroup={newSubGroup} removeSubGroup={removeSubGroup} updateSubGroup={updateSubGroup} />
