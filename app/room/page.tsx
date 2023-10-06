@@ -3,14 +3,15 @@ import { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
-import { AiOutlinePlus } from 'react-icons/ai';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 
 import { newRoom, exampleRoom } from '../../data/room-data';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
+import BackgroundInput from '../../components/BackgroundInput';
 import RoomSettings from '../../components/RoomSettings';
 import GroupList from '../../components/GroupList';
 import Room from '../../components/Room';
+import PhotosphereInput from '../../components/PhotosphereInput';
 import PhotosphereList from '../../components/PhotosphereList';
 import Confirm from '../../components/Confirm';
 
@@ -95,46 +96,30 @@ export default function RoomPage() {
     }, [screenWidth]);
 
     //Change background image file
-    const backgroundFileInputRef = useRef<HTMLInputElement>(null);
-
-    const handleBackgroundFileClick = () => {
-        backgroundFileInputRef.current?.click();
-    };
-
-    const handleBackgroundFileChange = (event: { target: { files: any; }; }) => {
-        if (event.target.files && event.target.files[0]) {
-            const background = event.target.files[0];
-            const backgroundUrl = URL.createObjectURL(background);
-            setBackground(prevBackground => ({
-                ...prevBackground,
-                image: backgroundUrl
-            }));
-        };
+    const updateBackgroundFile = (image: string) => {
+        setBackground(prevBackground => ({
+            ...prevBackground,
+            image: image
+        }));
     };
 
     //Add a new photosphere
-    const photosphereFileInputRef = useRef<HTMLInputElement>(null);
+    const updatePhotosphereFile = (image: string) => {
+        const id = photospheres.reduce((previous, current) => (previous > current.id) ? previous : current.id, -1) + 1;
+        const newGroups: Array<{ group: number; subGroup: number }> = [];
+        groups.forEach(group => {
+            newGroups.push({group: 0, subGroup: 0});
+        });
 
-    const handlePhotosphereFileClick = () => {
-        photosphereFileInputRef.current?.click();
-    };
+        const newPhotosphere = {id: id, name: "New Photosphere", image: image, topPos: 50, leftPos: 50, color: "gray", visible: true, groups: newGroups };
 
-    const handlePhotosphereFileChange = (event: { target: { files: any; }; }) => {
-        if (event.target.files && event.target.files[0]) {
-            const photosphere = event.target.files[0];
-            const photosphereUrl = URL.createObjectURL(photosphere);
+        setPhotospheres(prevPhotospheres => {
+            const newPhotospheres = [...prevPhotospheres];
 
-            const id = photospheres.reduce((previous, current) => (previous > current.id) ? previous : current.id, -1) + 1;
-            const newGroups: Array<{ group: number; subGroup: number }> = [];
-            groups.forEach(group => {
-                newGroups.push({group: 0, subGroup: 0});
-            });
-
-            const newPhotosphere = {id: id, name: "New Photosphere", image: photosphereUrl, topPos: 50, leftPos: 50, color: "gray", visible: true, groups: newGroups };
-            const newPhotospheres = [...photospheres];
             newPhotospheres.push(newPhotosphere);
-            setPhotospheres(newPhotospheres);
-        };
+
+            return newPhotospheres;
+        });
     };
 
     //Change photosphere data
@@ -378,11 +363,7 @@ export default function RoomPage() {
                 </Link>
                 <h2 className="pb-2 px-4 text-xl text-left">Background</h2>
                 <div className="border-t border-gray-100 p-4">
-                    <input type="file" accept="image/*" ref={backgroundFileInputRef} onChange={handleBackgroundFileChange} className="hidden" />
-                    <button onClick={handleBackgroundFileClick}>
-                        <p className="inline">Add A Background</p>
-                        <AiOutlinePlus className="inline" />
-                    </button>
+                    <BackgroundInput updateBackgroundFile={updateBackgroundFile} />
                 </div>
                 <div className="border-t border-gray-100 py-8 px-4">
                     <RoomSettings isPinging={isPinging} visibleColors={visibleColors} updatePinging={updatePinging} updateColorVisibility={updateColorVisibility} />
@@ -407,11 +388,7 @@ export default function RoomPage() {
                 </Link>
                 <h2 className="pb-2 px-4 text-xl text-right">Photospheres</h2>
                 <div className="border-t border-gray-100 py-4 px-4">
-                    <input type="file" accept="image/*" ref={photosphereFileInputRef} onChange={handlePhotosphereFileChange} className="hidden" />
-                    <button onClick={handlePhotosphereFileClick}>
-                        <p className="inline">Add A Photosphere</p>
-                        <AiOutlinePlus className="inline" />
-                    </button>
+                    <PhotosphereInput updatePhotosphereFile={updatePhotosphereFile} />
                 </div>
                 <div>
                     <PhotosphereList photospheres={photospheres} groups={groups} updatePhotosphere={updatePhotosphere} removePhotosphere={removePhotosphere} />
