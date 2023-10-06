@@ -1,15 +1,12 @@
 'use client'
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
-import { AiOutlineArrowRight } from 'react-icons/ai';
 
 import { newRoom, exampleRoom } from '../../data/room-data';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import RoomTab from '../../components/room/RoomTab';
 import Room from '../../components/room/Room';
-import PhotosphereInput from '../../components/room/PhotosphereInput';
-import PhotosphereList from '../../components/room/PhotosphereList';
+import PhotosphereTab from '../../components/room/PhotosphereTab';
 import Confirm from '../../components/Confirm';
 
 export default function RoomPage() {
@@ -368,16 +365,7 @@ export default function RoomPage() {
                 <div onClick={() => handleTabVisible("photosphereTab", !isTabVisible.photosphereTab)} className="absolute border-t-[48px] border-t-gray-200 border-l-[48px] border-l-transparent top-0 right-0"></div>
             </section>
             <section className={`${isTabVisible.photosphereTab ? "" : "hidden"} border-l border-gray-100 w-96 max-w-1/3 text-center bg-white`}>
-                <Link href="/photosphere" className="block m-2 ml-auto border-2 rounded-full border-gray-200 py-1 px-4 w-fit">
-                    <span>Go To Photospheres <AiOutlineArrowRight className="inline" /></span>
-                </Link>
-                <h2 className="pb-2 px-4 text-xl text-right">Photospheres</h2>
-                <div className="border-t border-gray-100 py-4 px-4">
-                    <PhotosphereInput updatePhotosphereFile={updatePhotosphereFile} />
-                </div>
-                <div>
-                    <PhotosphereList photospheres={photospheres} groups={groups} updatePhotosphere={updatePhotosphere} removePhotosphere={removePhotosphere} />
-                </div>
+                <PhotosphereTab updatePhotosphereFile={updatePhotosphereFile} photospheres={photospheres} groups={groups} updatePhotosphere={updatePhotosphere} removePhotosphere={removePhotosphere} />
             </section>
             <div className={`${photosphereToRemove ? "" : "hidden"}`}>
                 <Confirm confirmFunction={confirmRemovePhotosphere} denyFunction={denyRemovePhotosphere} confirmText="Are you sure you want to delete this photosphere?" confirmName={photosphereToRemove?.name} />
