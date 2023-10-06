@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { newRoom, exampleRoom } from '../../data/room-data';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import RoomTab from '../../components/room/RoomTab';
-import Room from '../../components/room/Room';
+import RoomDisplay from '../../components/room/RoomDisplay';
 import PhotosphereTab from '../../components/room/PhotosphereTab';
 import Confirm from '../../components/Confirm';
 
@@ -355,7 +355,7 @@ export default function RoomPage() {
                 <RoomTab updateBackgroundFile={updateBackgroundFile} isPinging={isPinging} visibleColors={visibleColors} updatePinging={updatePinging} updateColorVisibility={updateColorVisibility} groups={groups} updateGroupVisibility={updateGroupVisibility} newGroup={newGroup} removeGroup={removeGroup} updateGroup={updateGroup} newSubGroup={newSubGroup} removeSubGroup={removeSubGroup} updateSubGroup={updateSubGroup} />
             </section>
             <section className="relative p-8">
-                <Room
+                <RoomDisplay
                     background={background}
 					photospheres={photospheres}
                     groups={groups}

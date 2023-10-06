@@ -1,11 +1,11 @@
-import Room from '../components/room/Room';
+import RoomDisplay from '../components/room/RoomDisplay';
 import { exampleRoom } from '../data/room-data';
 
 export default function Home() {
   	return (
     	<main>
 			<section className="my-8 mx-auto border-2 border-gray-300 w-fit">
-				<Room
+				<RoomDisplay
 					background={exampleRoom.background}
 					photospheres={exampleRoom.photospheres}
                     groups={exampleRoom.groups}

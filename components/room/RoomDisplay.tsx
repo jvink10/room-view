@@ -9,7 +9,7 @@ type Props = {
     ping: boolean;
 };
 
-export default function Room(props: Props) {
+export default function RoomDisplay(props: Props) {
     return (
         <div className="relative w-fit">
             <Image
