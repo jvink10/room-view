@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-import { newRoom, exampleRoom } from '../../data/room-data';
+import roomData from '../../data/room-data';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import RoomTab from '../../components/room/RoomTab';
 import RoomDisplay from '../../components/room/RoomDisplay';
@@ -11,9 +11,9 @@ import Confirm from '../../components/Confirm';
 
 export default function RoomPage() {
     //Setting default Room values
-    const [background, setBackground] = useState<{ id: number; name: string; image: string; height: number; width: number }>(newRoom.background);
+    const [background, setBackground] = useState<{ id: number; name: string; image: string; height: number; width: number }>(roomData[0].background);
     const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; color: string; visible: boolean; groups: Array<{ group: number; subGroup: number }> }>>([]);
-    const [groups, setGroups] = useState<Array<{ id: number; name: string; subGroups: Array<{ id: number; name: string; visible: boolean }> }>>(newRoom.groups);
+    const [groups, setGroups] = useState<Array<{ id: number; name: string; subGroups: Array<{ id: number; name: string; visible: boolean }> }>>(roomData[0].groups);
 
     //Setting initial Room settings
     const [isTabVisible, setIsTabVisible] = useState<{ roomTab: boolean; photosphereTab: boolean }>({roomTab: true, photosphereTab: true});
@@ -68,16 +68,18 @@ export default function RoomPage() {
     //Checking search parameters
     const searchParams = useSearchParams();
     useEffect(() => {
-        const searchParamsId = searchParams.get("id");
+        const searchParamsId = Number(searchParams.get("id"));
 
-        if (searchParamsId === "1") {
-            setBackground(exampleRoom.background);
-            setPhotospheres(exampleRoom.photospheres);
-            setGroups(exampleRoom.groups);
+        const roomIndex = roomData.findIndex(room => room.background.id === searchParamsId);
+
+        if (roomIndex !== -1) {
+            setBackground(roomData[roomIndex].background);
+            setPhotospheres(roomData[roomIndex].photospheres);
+            setGroups(roomData[roomIndex].groups);
         } else {
-            setBackground(newRoom.background);
-            setPhotospheres(newRoom.photospheres);
-            setGroups(newRoom.groups);
+            setBackground(roomData[0].background);
+            setPhotospheres(roomData[0].photospheres);
+            setGroups(roomData[0].groups);
         };
     }, []);
 

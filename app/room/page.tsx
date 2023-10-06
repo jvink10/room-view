@@ -1,10 +1,9 @@
 import { Metadata, ResolvingMetadata } from 'next';
 
-import { newRoom, exampleRoom } from '../../data/room-data';
+import roomData from '../../data/room-data';
 import Room from '../../components/room/Room';
 
 type Props = {
-    params: { id: string };
     searchParams: { [key: string]: string | string[] | undefined };
 };
 
@@ -14,20 +13,24 @@ export async function generateMetadata(
 ): Promise<Metadata> {
     const searchParamsId = searchParams.id;
 
-    let name;
+    const roomIndex = roomData.findIndex(room => String(room.background.id) === searchParamsId);
 
-    if (searchParamsId === "1") {
-        name = exampleRoom.background.name;
+    let room;
+
+    if (roomIndex !== -1) {
+        room = roomData[roomIndex];
     } else {
-        name = newRoom.background.name;
+        room = roomData[0];
     };
+
+    const name = room.background.name;
       
     return {
         title: `${name} - Room View`,
     };
 };
 
-export default function RoomPage({ searchParams }: Props) {
+export default function RoomPage() {
     return (
         <main>
             <Room />
