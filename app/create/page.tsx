@@ -1,4 +1,11 @@
+import type { Metadata } from 'next';
+
 import CreateLink from '../../components/CreateLink';
+
+export const metadata: Metadata = {
+    title: 'Create - Room View',
+    description: 'Create or View a Room',
+};
 
 export default function Create() {
     return (
