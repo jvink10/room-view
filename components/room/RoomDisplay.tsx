@@ -3,7 +3,7 @@ import Image from 'next/image';
 import PhotoSphere from './PhotoSphere';
 
 type Props = {
-    background: { id: number; name: string; image: string; height: number; width: number };
+    background: { id: number; image: string; height: number; width: number };
     photospheres?: Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; color: string; visible: boolean; groups: Array<{ group: number; subGroup: number }> }>;
     groups: Array<{ id: number; name: string; subGroups: Array<{ id: number; name: string; visible: boolean }> }>;
     ping: boolean;

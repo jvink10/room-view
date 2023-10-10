@@ -13,17 +13,11 @@ export async function generateMetadata(
 ): Promise<Metadata> {
     const searchParamsId = searchParams.id;
 
-    const roomIndex = roomData.findIndex(room => String(room.background.id) === searchParamsId);
+    const roomIndex = roomData.findIndex(room => String(room.id) === searchParamsId);
 
-    let room;
+    const room = roomIndex !== -1 ? roomData[roomIndex] : roomData[0];
 
-    if (roomIndex !== -1) {
-        room = roomData[roomIndex];
-    } else {
-        room = roomData[0];
-    };
-
-    const name = room.background.name;
+    const name = room.name;
       
     return {
         title: `${name} - Room View`,
