@@ -2,14 +2,18 @@ const roomData = [
     {
         id: 0,
         name: "New Room",
-        background: {id: 0, image: "/white-background.jpg", height: 1000, width: 1000},
+        background: [
+            {id: 0, image: "/white-background.jpg", height: 1000, width: 1000},
+        ],
         photospheres: [],
         groups: [],
     },
     {
         id: 1,
         name: "Example Room",
-        background: {id: 0, image: "/background.png", height: 1000, width: 1000},
+        background: [
+            {id: 0, image: "/background.png", height: 1000, width: 1000},
+        ],
         photospheres: [
             {id: 0, name: "Bardon Esplanade Park", image: "/bardon-esplanade-park.jpg", topPos: 75, leftPos: 21, color: "green", visible: true, groups: []},
             {id: 1, name: "Bardon Park Bridge", image: "/bardon-park-bridge.jpg", topPos: 68, leftPos: 68, color: "blue", visible: true, groups: []},

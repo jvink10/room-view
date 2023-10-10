@@ -3,7 +3,7 @@ import Image from 'next/image';
 import PhotoSphere from './PhotoSphere';
 
 type Props = {
-    background: { id: number; image: string; height: number; width: number };
+    background: Array<{ id: number; image: string; height: number; width: number }>;
     photospheres?: Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; color: string; visible: boolean; groups: Array<{ group: number; subGroup: number }> }>;
     groups: Array<{ id: number; name: string; subGroups: Array<{ id: number; name: string; visible: boolean }> }>;
     ping: boolean;
@@ -13,10 +13,10 @@ export default function RoomDisplay(props: Props) {
     return (
         <div className="relative w-fit">
             <Image
-                src={`${props.background.image}`}
+                src={`${props.background[0].image}`}
                 alt="Room background image"
-                height={props.background.height}
-                width={props.background.width}
+                height={props.background[0].height}
+                width={props.background[0].width}
                 className="object-contain"
             />
             <div className="absolute inset-0">

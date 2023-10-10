@@ -11,7 +11,7 @@ import Confirm from '../../components/Confirm';
 
 export default function RoomPage() {
     //Setting default Room values
-    const [background, setBackground] = useState<{ id: number; image: string; height: number; width: number }>(roomData[0].background);
+    const [background, setBackground] = useState<Array<{ id: number; image: string; height: number; width: number }>>(roomData[0].background);
     const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; color: string; visible: boolean; groups: Array<{ group: number; subGroup: number }> }>>([]);
     const [groups, setGroups] = useState<Array<{ id: number; name: string; subGroups: Array<{ id: number; name: string; visible: boolean }> }>>(roomData[0].groups);
 
