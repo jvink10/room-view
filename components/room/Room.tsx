@@ -11,7 +11,7 @@ import Confirm from '../../components/Confirm';
 
 export default function RoomPage() {
     //Setting default Room values
-    const [background, setBackground] = useState<Array<{ id: number; image: string; height: number; width: number }>>(roomData[0].background);
+    const [backgrounds, setBackgrounds] = useState<Array<{ id: number; name: string; image: string; height: number; width: number; visible: boolean }>>(roomData[0].backgrounds);
     const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; color: string; visible: boolean; groups: Array<{ group: number; subGroup: number }> }>>([]);
     const [groups, setGroups] = useState<Array<{ id: number; name: string; subGroups: Array<{ id: number; name: string; visible: boolean }> }>>(roomData[0].groups);
 
@@ -73,11 +73,11 @@ export default function RoomPage() {
         const roomIndex = roomData.findIndex(room => room.id === searchParamsId);
 
         if (roomIndex !== -1) {
-            setBackground(roomData[roomIndex].background);
+            setBackgrounds(roomData[roomIndex].backgrounds);
             setPhotospheres(roomData[roomIndex].photospheres);
             setGroups(roomData[roomIndex].groups);
         } else {
-            setBackground(roomData[0].background);
+            setBackgrounds(roomData[0].backgrounds);
             setPhotospheres(roomData[0].photospheres);
             setGroups(roomData[0].groups);
         };
@@ -93,10 +93,61 @@ export default function RoomPage() {
 
     //Change background image file
     const updateBackgroundFile = (image: string) => {
-        setBackground(prevBackground => ({
-            ...prevBackground,
-            image: image
-        }));
+        const id = backgrounds.reduce((previous, current) => (previous > current.id) ? previous : current.id, -1) + 1;
+
+        const newBackground = {id: id, name: "New Layer", image: image, height: 1000, width: 1000, visible: true };
+
+        setBackgrounds(prevBackgrounds => {
+            const updatedBackgrounds = [...prevBackgrounds];
+
+            updatedBackgrounds.forEach(background => background.visible = false);
+
+            updatedBackgrounds.push(newBackground);
+
+            return updatedBackgrounds;
+        });
+    };
+
+    //Update layer data
+    const updateLayer = (id: number, name: string) => {
+        setBackgrounds(prevBackgrounds => {
+            const updatedBackgrounds = [...prevBackgrounds];
+
+            const backgroundIndex = updatedBackgrounds.findIndex(background => background.id === id);
+
+            updatedBackgrounds[backgroundIndex].name = name;
+
+            return updatedBackgrounds;
+        });
+    };
+
+    const updateLayerVisibility = (id: number) => {
+        setBackgrounds(prevBackgrounds => {
+            const updatedBackgrounds = [...prevBackgrounds];
+
+            const backgroundIndex = updatedBackgrounds.findIndex(background => background.id === id);
+
+            updatedBackgrounds.forEach(background => background.visible = false);
+            updatedBackgrounds[backgroundIndex].visible = true;
+
+            return updatedBackgrounds;
+        });
+    };
+
+    const removeLayer = (id: number) => {
+        if (backgrounds.length <= 1) {
+            return;
+        };
+
+        setBackgrounds(prevBackgrounds => {
+            const updatedBackgrounds = [...prevBackgrounds];
+
+            const backgroundIndex = updatedBackgrounds.findIndex(background => background.id === id);
+
+            updatedBackgrounds.splice(backgroundIndex, 1);
+
+            return updatedBackgrounds;
+        });
     };
 
     //Change pinging state
@@ -354,11 +405,11 @@ export default function RoomPage() {
     return (
         <div className="flex flex-row justify-center">
             <section className={`${isTabVisible.roomTab ? "" : "hidden"} border-r border-gray-100 w-96 max-w-1/3 text-center bg-white`}>
-                <RoomTab updateBackgroundFile={updateBackgroundFile} isPinging={isPinging} visibleColors={visibleColors} updatePinging={updatePinging} updateColorVisibility={updateColorVisibility} groups={groups} updateGroupVisibility={updateGroupVisibility} newGroup={newGroup} removeGroup={removeGroup} updateGroup={updateGroup} newSubGroup={newSubGroup} removeSubGroup={removeSubGroup} updateSubGroup={updateSubGroup} />
+                <RoomTab updateBackgroundFile={updateBackgroundFile} updateLayer={updateLayer} updateLayerVisibility={updateLayerVisibility} removeLayer={removeLayer} backgrounds={backgrounds} isPinging={isPinging} visibleColors={visibleColors} updatePinging={updatePinging} updateColorVisibility={updateColorVisibility} groups={groups} updateGroupVisibility={updateGroupVisibility} newGroup={newGroup} removeGroup={removeGroup} updateGroup={updateGroup} newSubGroup={newSubGroup} removeSubGroup={removeSubGroup} updateSubGroup={updateSubGroup} />
             </section>
             <section className="relative p-8">
                 <RoomDisplay
-                    background={background}
+                    backgrounds={backgrounds}
 					photospheres={photospheres}
                     groups={groups}
                     ping={isPinging}
