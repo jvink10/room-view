@@ -6,7 +6,7 @@ export default function Home() {
     	<main>
 			<section className="my-8 mx-auto border-2 border-gray-300 w-fit">
 				<RoomDisplay
-					background={roomData[1].background}
+					backgrounds={roomData[1].backgrounds}
 					photospheres={roomData[1].photospheres}
                     groups={roomData[1].groups}
                     ping={true}
