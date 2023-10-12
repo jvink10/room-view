@@ -13,7 +13,7 @@ export default function RoomDisplay(props: Props) {
     return (
         <div className="relative w-fit">
             {props.backgrounds.map((background) => (
-                <div className={`${background.visible ? "" : "hidden"}`}>
+                <div key={background.id} className={`${background.visible ? "" : "hidden"}`}>
                     <Image
                         src={`${background.image}`}
                         alt={`${background.name}`}
