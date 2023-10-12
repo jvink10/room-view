@@ -6,7 +6,8 @@ import PhotosphereList from './PhotosphereList';
 
 type Props = {
     updatePhotosphereFile: Function;
-    photospheres: Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; color: string; visible: boolean; groups: Array<{ group: number; subGroup: number }> }>;
+    backgrounds: Array<{ id: number; name: string; image: string; height: number; width: number; visible: boolean }>;
+    photospheres: Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; color: string; visible: boolean; groups: Array<{ group: number; subGroup: number }>; layer: number }>;
     groups: Array<{ id: number; name: string; subGroups: Array<{ id: number; name: string; visible: boolean }> }>;
     updatePhotosphere: Function;
     removePhotosphere: Function;
@@ -23,7 +24,7 @@ export default function PhotosphereTab(props: Props) {
                 <PhotosphereInput updatePhotosphereFile={props.updatePhotosphereFile} />
             </div>
             <div>
-                <PhotosphereList photospheres={props.photospheres} groups={props.groups} updatePhotosphere={props.updatePhotosphere} removePhotosphere={props.removePhotosphere} />
+                <PhotosphereList backgrounds={props.backgrounds} photospheres={props.photospheres} groups={props.groups} updatePhotosphere={props.updatePhotosphere} removePhotosphere={props.removePhotosphere} />
             </div>
         </div>
     );

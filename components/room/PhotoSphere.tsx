@@ -10,6 +10,7 @@ type Props = {
     color: string;
     visible: boolean;
     groups: Array<{ group: number; subGroup: number }>;
+    layer: number;
     ping: boolean;
 };
 

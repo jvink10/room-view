@@ -12,7 +12,7 @@ import Confirm from '../../components/Confirm';
 export default function RoomPage() {
     //Setting default Room values
     const [backgrounds, setBackgrounds] = useState<Array<{ id: number; name: string; image: string; height: number; width: number; visible: boolean }>>(roomData[0].backgrounds);
-    const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; color: string; visible: boolean; groups: Array<{ group: number; subGroup: number }> }>>([]);
+    const [photospheres, setPhotospheres] = useState<Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; color: string; visible: boolean; groups: Array<{ group: number; subGroup: number }>; layer: number }>>([]);
     const [groups, setGroups] = useState<Array<{ id: number; name: string; subGroups: Array<{ id: number; name: string; visible: boolean }> }>>(roomData[0].groups);
 
     //Setting initial Room settings
@@ -21,11 +21,22 @@ export default function RoomPage() {
     const [visibleColors, setVisibleColors] = useState<Array<{ color: string; visible: boolean }>>([{color: "gray", visible: true}, {color: "green", visible: true}, {color: "blue", visible: true}, {color: "yellow", visible: true}]);
 
     const updatePhotosphereVisibility = () => {
+        console.log(backgrounds);
+        console.log(photospheres);
+
         setPhotospheres(prevPhotospheres => {
             const updatedPhotospheres = [...prevPhotospheres];
 
             updatedPhotospheres.forEach(photosphere => {
-                if (photosphere.groups.every(photosphereGroup => {
+                let layerVisible: boolean;
+                let groupsVisible: boolean;
+                let colorVisible: boolean;
+
+                const layerId = photosphere.layer;
+                const layerIndex = backgrounds.findIndex(layer => layer.id === layerId);
+                layerVisible = backgrounds[layerIndex].visible;
+
+                groupsVisible = photosphere.groups.every(photosphereGroup => {
                     const groupIndex = groups.findIndex(group => group.id === photosphereGroup.group);
 
                     const group = groups[groupIndex];
@@ -39,18 +50,15 @@ export default function RoomPage() {
                     const visible = subGroup.visible === true;
 
                     return visible;
-                })) {
-                    const color = photosphere.color;
+                });
 
-                    const colorIndex = visibleColors.findIndex(visibleColor => visibleColor.color === color);
+                const color = photosphere.color;
+                const colorIndex = visibleColors.findIndex(visibleColor => visibleColor.color === color);
+                const visibleColor = visibleColors[colorIndex];
+                colorVisible = visibleColor.visible;
 
-                    const visibleColor = visibleColors[colorIndex];
-
-                    if (visibleColor.visible) {
-                        photosphere.visible = true;
-                    } else {
-                        photosphere.visible = false;
-                    };                    
+                if (layerVisible && groupsVisible && colorVisible) {
+                    photosphere.visible = true;
                 } else {
                     photosphere.visible = false;
                 };
@@ -104,6 +112,8 @@ export default function RoomPage() {
 
             updatedBackgrounds.push(newBackground);
 
+            updatePhotosphereVisibility();
+
             return updatedBackgrounds;
         });
     };
@@ -129,6 +139,8 @@ export default function RoomPage() {
 
             updatedBackgrounds.forEach(background => background.visible = false);
             updatedBackgrounds[backgroundIndex].visible = true;
+
+            updatePhotosphereVisibility();
 
             return updatedBackgrounds;
         });
@@ -350,8 +362,9 @@ export default function RoomPage() {
         groups.forEach(group => {
             newGroups.push({group: 0, subGroup: 0});
         });
+        const layer = backgrounds[0].id;
 
-        const newPhotosphere = {id: id, name: "New Photosphere", image: image, topPos: 50, leftPos: 50, color: "gray", visible: true, groups: newGroups };
+        const newPhotosphere = {id: id, name: "New Photosphere", image: image, topPos: 50, leftPos: 50, color: "gray", visible: true, groups: newGroups, layer:layer };
 
         setPhotospheres(prevPhotospheres => {
             const newPhotospheres = [...prevPhotospheres];
@@ -418,7 +431,7 @@ export default function RoomPage() {
                 <div onClick={() => handleTabVisible("photosphereTab", !isTabVisible.photosphereTab)} className="absolute border-t-[48px] border-t-gray-200 border-l-[48px] border-l-transparent top-0 right-0"></div>
             </section>
             <section className={`${isTabVisible.photosphereTab ? "" : "hidden"} border-l border-gray-100 w-96 max-w-1/3 text-center bg-white`}>
-                <PhotosphereTab updatePhotosphereFile={updatePhotosphereFile} photospheres={photospheres} groups={groups} updatePhotosphere={updatePhotosphere} removePhotosphere={removePhotosphere} />
+                <PhotosphereTab updatePhotosphereFile={updatePhotosphereFile} backgrounds={backgrounds} photospheres={photospheres} groups={groups} updatePhotosphere={updatePhotosphere} removePhotosphere={removePhotosphere} />
             </section>
             <div className={`${photosphereToRemove ? "" : "hidden"}`}>
                 <Confirm confirmFunction={confirmRemovePhotosphere} denyFunction={denyRemovePhotosphere} confirmText="Are you sure you want to delete this photosphere?" confirmName={photosphereToRemove?.name} />

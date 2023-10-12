@@ -1,5 +1,6 @@
 type Props = {
-    photospheres: Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; color: string; visible: boolean; groups: Array<{ group: number; subGroup: number }> }>;
+    backgrounds: Array<{ id: number; name: string; image: string; height: number; width: number; visible: boolean }>;
+    photospheres: Array<{ id: number; name: string; image: string; topPos: number; leftPos: number; color: string; visible: boolean; groups: Array<{ group: number; subGroup: number }>; layer: number }>;
     groups: Array<{ id: number; name: string; subGroups: Array<{ id: number; name: string; visible: boolean }> }>;
     updatePhotosphere: Function;
     removePhotosphere: Function;
@@ -28,6 +29,12 @@ export default function PhotosphereList(props: Props) {
         if (posRegex.test(String(value))) {
             props.updatePhotosphere(photosphereId, name, value, false);
         };
+    };
+
+    const updateLayer = (photosphereId: number, event: { target: { name: string, value: string } }) => {
+        const layerId = Number(event.target.value);
+
+        props.updatePhotosphere(photosphereId, "layer", layerId, true);
     };
 
     const updateGroup = (photosphereId: number, event: { target: { name: string, value: string } }) => {
@@ -81,6 +88,16 @@ export default function PhotosphereList(props: Props) {
                                     <p>Horizontal Position</p>
                                     <input type="number" name="leftPos" value={photosphere.leftPos} onChange={(event) => updatePhotospherePosition(photosphere.id, event)} className="w-16 text-center" />
                                 </div>
+                            </div>
+                            <div>
+                                <label>
+                                    <span>Layer</span>
+                                    <select onChange={(event) => updateLayer(photosphere.id, event)}>
+                                        {props.backgrounds.map((background) => (
+                                            <option key={background.id} value={background.id}>{background.name}</option>
+                                        ))}
+                                    </select>
+                                </label>
                             </div>
                             <div className="flex flex-col gap-1">
                                 {props.groups.map((group) => (
